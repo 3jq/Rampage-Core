@@ -2,11 +2,8 @@ package dev.rampage.rampagecore.json;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+
+import java.io.*;
 import java.util.List;
 
 public class JsonUtils {
@@ -44,8 +41,7 @@ public class JsonUtils {
         if (!file.exists()) {
             try {
                 file.createNewFile();
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -54,13 +50,12 @@ public class JsonUtils {
     public static void updateJSON(Root root) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         root.setName("playersInfo");
-        String newJson = gson.toJson((Object)root);
+        String newJson = gson.toJson(root);
         String fileName = Path.getFileName();
         FileWriter fw = null;
         try {
             fw = new FileWriter(fileName, true);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         BufferedWriter bw = new BufferedWriter(fw);
@@ -71,8 +66,7 @@ public class JsonUtils {
         try {
             fw.close();
             bw.close();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

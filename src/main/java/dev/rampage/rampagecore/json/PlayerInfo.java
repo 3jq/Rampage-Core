@@ -2,13 +2,13 @@ package dev.rampage.rampagecore.json;
 
 public class PlayerInfo {
     private String nickname;
-    private String klass;
+    private String selectedClass;
     private int lvl;
     private int exp;
 
-    public PlayerInfo(String nickname, String klass, int lvl, int exp) {
+    public PlayerInfo(String nickname, String selectedClass, int lvl, int exp) {
         this.nickname = nickname;
-        this.klass = klass;
+        this.selectedClass = selectedClass;
         this.lvl = lvl;
         this.exp = exp;
     }
@@ -17,36 +17,36 @@ public class PlayerInfo {
         return this.nickname;
     }
 
-    public String getKlass() {
-        return this.klass;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getSelectedClass() {
+        return this.selectedClass;
+    }
+
+    public void setSelectedClass(String selectedClass) {
+        this.selectedClass = selectedClass;
     }
 
     public int getExp() {
         return this.exp;
     }
 
+    public void setExp(int exp) {
+        this.exp = exp;
+    }
+
     public int getLvl() {
         return this.lvl;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public void setKlass(String klass) {
-        this.klass = klass;
     }
 
     public void setLvl(int lvl) {
         this.lvl = lvl;
     }
 
-    public void setExp(int exp) {
-        this.exp = exp;
-    }
-
     public String toString() {
-        return "PlayerInfo{nickname=" + this.nickname + ", klass=" + this.klass + ", lvl=" + this.lvl + ", exp=" + this.exp + '}';
+        return "PlayerInfo{nickname=" + this.nickname + ", klass=" + this.selectedClass + ", lvl=" + this.lvl + ", exp=" + this.exp + '}';
     }
 }
 

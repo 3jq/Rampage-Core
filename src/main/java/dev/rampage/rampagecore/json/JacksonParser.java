@@ -3,6 +3,7 @@ package dev.rampage.rampagecore.json;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -57,8 +58,7 @@ public class JacksonParser {
             }
             parser.close();
             root.setListPlayerInfo(playerInfoList);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return root;

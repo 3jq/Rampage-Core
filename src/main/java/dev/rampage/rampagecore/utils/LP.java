@@ -13,7 +13,7 @@ public class LP {
         if (provider != null) {
             LuckPerms lp = (LuckPerms)provider.getProvider();
             User user = lp.getUserManager().getUser(id);
-            user.data().add((Node)Node.builder((String)permission).build());
+            user.data().add(Node.builder(permission).build());
             lp.getUserManager().saveUser(user);
         }
     }
@@ -23,7 +23,7 @@ public class LP {
         if (provider != null) {
             LuckPerms lp = (LuckPerms)provider.getProvider();
             User user = lp.getUserManager().getUser(id);
-            user.data().remove((Node)Node.builder((String)permission).build());
+            user.data().remove(Node.builder(permission).build());
             lp.getUserManager().saveUser(user);
         }
     }

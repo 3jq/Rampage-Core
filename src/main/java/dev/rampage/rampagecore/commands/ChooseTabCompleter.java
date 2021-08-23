@@ -1,14 +1,15 @@
 package dev.rampage.rampagecore.commands;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class ChooseTabCompleter
-implements TabCompleter {
+        implements TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         if (args.length == 1) {
             ArrayList<String> classes = new ArrayList<String>(Arrays.asList("archer", "assassin", "healer", "tank", "warrior"));
