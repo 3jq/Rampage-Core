@@ -46,7 +46,7 @@ public class Archer
         Player player;
         Arrow arrow;
         Projectile entity = event.getEntity();
-        if (entity.getType() == EntityType.ARROW && (arrow = (Arrow) entity).getShooter() instanceof Player && PEX.inGroup(player = (Player) arrow.getShooter(), "archer")) {
+        if (entity.getType() == EntityType.ARROW && (arrow = (Arrow) entity).getShooter() instanceof Player && PEX.inGroup((Player) arrow.getShooter(), "archer")) {
             arrow.setVelocity(arrow.getVelocity().multiply(1.5));
         }
     }
