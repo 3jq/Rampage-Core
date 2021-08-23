@@ -64,12 +64,12 @@ public class C
                     Player player = (Player) sender;
                     String name = player.getName();
                     PlayerInfo playerInfo = JsonUtils.getPlayerInfoName(name);
-                    String klass = playerInfo.getSelectedClass();
+                    String selectedClass = playerInfo.getSelectedClass();
                     int lvl = playerInfo.getLvl();
                     int exp = playerInfo.getExp();
                     int new_lvl_exp = ExpGaining.calcNewLvl(lvl);
                     player.sendMessage(ChatColor.DARK_RED + "\u0421\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0430 \u0438\u0433\u0440\u043e\u043a\u0430 " + ChatColor.AQUA + name);
-                    player.sendMessage(ChatColor.YELLOW + "\u041a\u043b\u0430\u0441\u0441: " + ChatColor.GREEN + klass);
+                    player.sendMessage(ChatColor.YELLOW + "\u041a\u043b\u0430\u0441\u0441: " + ChatColor.GREEN + selectedClass);
                     player.sendMessage(ChatColor.YELLOW + "\u0423\u0440\u043e\u0432\u0435\u043d\u044c: " + ChatColor.WHITE + lvl);
                     player.sendMessage(ChatColor.YELLOW + "\u041e\u043f\u044b\u0442: " + ChatColor.WHITE + exp + '/' + new_lvl_exp);
                     break;
@@ -85,12 +85,12 @@ public class C
                     sender.sendMessage(ChatColor.RED + "\u0418\u0433\u0440\u043e\u043a \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d.");
                     return true;
                 }
-                String klass = playerInfo.getSelectedClass();
+                String selectedClass = playerInfo.getSelectedClass();
                 int lvl = playerInfo.getLvl();
                 int exp = playerInfo.getExp();
                 int new_lvl_exp = ExpGaining.calcNewLvl(lvl);
                 sender.sendMessage(ChatColor.DARK_RED + "\u0421\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0430 \u0438\u0433\u0440\u043e\u043a\u0430 " + ChatColor.AQUA + name);
-                sender.sendMessage(ChatColor.YELLOW + "\u041a\u043b\u0430\u0441\u0441: " + ChatColor.GREEN + klass);
+                sender.sendMessage(ChatColor.YELLOW + "\u041a\u043b\u0430\u0441\u0441: " + ChatColor.GREEN + selectedClass);
                 sender.sendMessage(ChatColor.YELLOW + "\u0423\u0440\u043e\u0432\u0435\u043d\u044c: " + ChatColor.WHITE + lvl);
                 sender.sendMessage(ChatColor.YELLOW + "\u041e\u043f\u044b\u0442: " + ChatColor.WHITE + exp + '/' + new_lvl_exp);
                 break;
@@ -100,19 +100,19 @@ public class C
                 Player player = (Player) sender;
                 UUID id = player.getUniqueId();
                 PlayerInfo playerInfo = JsonUtils.getPlayerInfoName(player.getName());
-                String klass = playerInfo.getSelectedClass();
+                String selectedClass = playerInfo.getSelectedClass();
                 if (args.length == 1) {
-                    if (klass.equals("none")) {
+                    if (selectedClass.equals("none")) {
                         sender.sendMessage(ChatColor.RED + "\u0423 \u0432\u0430\u0441 \u043d\u0435\u0442 \u043a\u043b\u0430\u0441\u0441\u0430!");
                         sender.sendMessage(ChatColor.RED + "\u0418\u0441\u043f\u043e\u043b\u044c\u0437\u0443\u0439\u0442\u0435 /c choose <class>");
                         return true;
                     }
                 } else {
-                    klass = args[1];
+                    selectedClass = args[1];
                 }
                 Inventory gui = Bukkit.createInventory(player, 9, ChatColor.BLACK + "\u0421\u043f\u043e\u0441\u043e\u0431\u043d\u043e\u0441\u0442\u0438");
                 ItemStack[] menu_items = new ItemStack[]{};
-                switch (klass) {
+                switch (selectedClass) {
                     case "archer": {
                         gui = Bukkit.createInventory(player, 18, ChatColor.BLACK + "\u0421\u043f\u043e\u0441\u043e\u0431\u043d\u043e\u0441\u0442\u0438");
                         ItemStack arrowSpeed = new ItemStack(Material.BOW);
@@ -532,7 +532,7 @@ public class C
                         break;
                     }
                     default: {
-                        player.sendMessage(ChatColor.RED + "\u041a\u043b\u0430\u0441\u0441\u0430 " + klass + " \u043d\u0435 \u0441\u0443\u0449\u0435\u0441\u0442\u0432\u0443\u0435\u0442.");
+                        player.sendMessage(ChatColor.RED + "\u041a\u043b\u0430\u0441\u0441\u0430 " + selectedClass + " \u043d\u0435 \u0441\u0443\u0449\u0435\u0441\u0442\u0432\u0443\u0435\u0442.");
                     }
                 }
                 gui.setContents(menu_items);
@@ -554,7 +554,7 @@ public class C
                 }
                 UUID id = ((Player) sender).getUniqueId();
                 PlayerInfo playerInfo = JsonUtils.getPlayerInfoName(sender.getName());
-                String klass = playerInfo.getSelectedClass();
+                String selectedClass = playerInfo.getSelectedClass();
                 String nickname = sender.getName();
                 int lvl = playerInfo.getLvl();
                 int exp = playerInfo.getExp();
@@ -597,7 +597,7 @@ public class C
                     sender.sendMessage(ChatColor.GREEN + "\u0422\u0435\u043f\u0435\u0440\u044c \u0442\u044b - " + Class2);
                     break;
                 }
-                sender.sendMessage(ChatColor.RED + "\u0422\u044b \u043d\u0435 \u043c\u043e\u0436\u0435\u0448\u044c \u0441\u043c\u0435\u043d\u0438\u0442\u044c \u043a\u043b\u0430\u0441\u0441, \u0442.\u043a. \u0443\u0436\u0435 \u0432\u044b\u0431\u0440\u0430\u043b " + klass);
+                sender.sendMessage(ChatColor.RED + "\u0422\u044b \u043d\u0435 \u043c\u043e\u0436\u0435\u0448\u044c \u0441\u043c\u0435\u043d\u0438\u0442\u044c \u043a\u043b\u0430\u0441\u0441, \u0442.\u043a. \u0443\u0436\u0435 \u0432\u044b\u0431\u0440\u0430\u043b " + selectedClass);
                 break;
             }
             case "reset": {
@@ -641,12 +641,12 @@ public class C
                     }
                     UUID id = player.getUniqueId();
                     String nickname = player.getName();
-                    String klass = JsonUtils.getPlayerInfoName(player.getName()).getSelectedClass();
+                    String selectedClass = JsonUtils.getPlayerInfoName(player.getName()).getSelectedClass();
                     int lvl = JsonUtils.getPlayerInfoName(player.getName()).getLvl();
                     int exp = JsonUtils.getPlayerInfoName(player.getName()).getExp();
                     C.removeEffects(player);
                     JsonUtils.createPlayerInfo(nickname, "none", lvl, exp);
-                    sender.sendMessage(ChatColor.YELLOW + "\u0412\u044b \u0443\u0431\u0440\u0430\u043b\u0438 \u043a\u043b\u0430\u0441\u0441 " + ChatColor.GREEN + klass + ChatColor.YELLOW + " \u0443 \u0438\u0433\u0440\u043e\u043a\u0430 " + ChatColor.GREEN + nickname);
+                    sender.sendMessage(ChatColor.YELLOW + "\u0412\u044b \u0443\u0431\u0440\u0430\u043b\u0438 \u043a\u043b\u0430\u0441\u0441 " + ChatColor.GREEN + selectedClass + ChatColor.YELLOW + " \u0443 \u0438\u0433\u0440\u043e\u043a\u0430 " + ChatColor.GREEN + nickname);
                     player.sendMessage(ChatColor.YELLOW + "\u0423 \u0432\u0430\u0441 \u0443\u0431\u0440\u0430\u043b\u0438 \u043a\u043b\u0430\u0441\u0441, \u0438 \u0442\u0435\u043f\u0435\u0440\u044c \u0432\u044b \u043c\u043e\u0436\u0435\u0442\u0435 \u0432\u044b\u0431\u0440\u0430\u0442\u044c \u043d\u043e\u0432\u044b\u0439!");
                     break;
                 }
@@ -669,7 +669,7 @@ public class C
                     int amount = Integer.parseInt(args[2]);
                     PlayerInfo playerInfo = JsonUtils.getPlayerInfoName(player.getName());
                     String nickname = player.getName();
-                    String klass = playerInfo.getSelectedClass();
+                    String selectedClass = playerInfo.getSelectedClass();
                     int lvl = playerInfo.getLvl();
                     int new_lvl_exp = ExpGaining.calcNewLvl(lvl);
                     player.sendMessage(ChatColor.YELLOW + "\u0418\u0433\u0440\u043e\u043a " + sender.getName() + " \u0432\u044b\u0434\u0430\u043b \u0432\u0430\u043c " + amount + " \u043e\u043f\u044b\u0442\u0430");
@@ -677,7 +677,7 @@ public class C
                         new_lvl_exp = ExpGaining.calcNewLvl(++lvl);
                         player.sendMessage(ChatColor.YELLOW + "\u0412\u0430\u0448 \u0443\u0440\u043e\u0432\u0435\u043d\u044c \u043f\u043e\u0432\u044b\u0448\u0435\u043d \u0434\u043e " + lvl + '!');
                     }
-                    JsonUtils.createPlayerInfo(nickname, klass, lvl, exp);
+                    JsonUtils.createPlayerInfo(nickname, selectedClass, lvl, exp);
                     RestorePotionEffects.calculateHP(player);
                     break;
                 }
@@ -699,14 +699,14 @@ public class C
                     UUID id = player.getUniqueId();
                     PlayerInfo playerInfo = JsonUtils.getPlayerInfoName(player.getName());
                     String nickname = player.getName();
-                    String klass = playerInfo.getSelectedClass();
+                    String selectedClass = playerInfo.getSelectedClass();
                     int lvl = playerInfo.getLvl();
                     if (amount > lvl) {
                         player.sendMessage(ChatColor.YELLOW + sender.getName() + " \u043f\u043e\u0432\u044b\u0441\u0438\u043b \u0432\u0430\u0448 \u0443\u0440\u043e\u0432\u0435\u043d\u044c \u0434\u043e " + amount + '!');
                     } else if (amount < lvl) {
                         player.sendMessage(ChatColor.YELLOW + sender.getName() + " \u043f\u043e\u043d\u0438\u0437\u0438\u043b \u0432\u0430\u0448 \u0443\u0440\u043e\u0432\u0435\u043d\u044c \u0434\u043e " + amount + '!');
                     }
-                    JsonUtils.createPlayerInfo(nickname, klass, amount, 0);
+                    JsonUtils.createPlayerInfo(nickname, selectedClass, amount, 0);
                     RestorePotionEffects.calculateHP(player);
                     break;
                 }

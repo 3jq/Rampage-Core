@@ -33,14 +33,14 @@ public class ExpGaining
             int exp = playerInfo.getExp() + amount;
             int lvl = playerInfo.getLvl();
             int new_lvl_exp = ExpGaining.calcNewLvl(lvl);
-            String klass = playerInfo.getSelectedClass();
+            String selectedClass = playerInfo.getSelectedClass();
             while (exp >= new_lvl_exp) {
                 exp -= new_lvl_exp;
                 new_lvl_exp = ExpGaining.calcNewLvl(++lvl);
                 killer.sendMessage(ChatColor.YELLOW + "\u0412\u044b \u043f\u043e\u0432\u044b\u0441\u0438\u043b\u0438 \u0441\u0432\u043e\u0439 \u0443\u0440\u043e\u0432\u0435\u043d\u044c \u0434\u043e " + lvl + '!');
-                if (klass.equals("archer") && lvl >= 30) {
+                if (selectedClass.equals("archer") && lvl >= 30) {
                     killer.addPotionEffect(PotionEffectType.SPEED.createEffect(6000000, 0));
-                } else if (klass.equals("assassin") && lvl >= 30) {
+                } else if (selectedClass.equals("assassin") && lvl >= 30) {
                     killer.addPotionEffect(PotionEffectType.NIGHT_VISION.createEffect(6000000, 0));
                 }
 
@@ -50,12 +50,12 @@ public class ExpGaining
                     continue;
                 }
 
-                if (!klass.equals("tank") || lvl % 10 != 0) continue;
+                if (!selectedClass.equals("tank") || lvl % 10 != 0) continue;
                 killer.setHealthScale(killer.getHealthScale() + 2.0);
                 killer.sendMessage(ChatColor.YELLOW + "\u0412\u0430\u0448\u0435 \u0437\u0434\u043e\u0440\u043e\u0432\u044c\u0435 \u0432\u043e\u0437\u0440\u043e\u0441\u043b\u043e \u0434\u043e " + killer.getHealthScale() + '.');
             }
 
-            JsonUtils.createPlayerInfo(killer.getName(), klass, lvl, exp);
+            JsonUtils.createPlayerInfo(killer.getName(), selectedClass, lvl, exp);
         }
     }
 
@@ -68,7 +68,7 @@ public class ExpGaining
             int amount = (int) ((double) Math.min(event.getDroppedExp(), 100) * global_buster);
             int lvl = playerInfo.getLvl();
             int new_lvl_exp = ExpGaining.calcNewLvl(lvl);
-            String klass = playerInfo.getSelectedClass();
+            String selectedClass = playerInfo.getSelectedClass();
             killer.sendMessage("\u0412\u044b \u043f\u043e\u043b\u0443\u0447\u0438\u043b\u0438 " + amount + " \u043e\u043f\u044b\u0442\u0430 \u0437\u0430 \u0443\u0431\u0438\u0439\u0441\u0442\u0432\u043e \u0438\u0433\u0440\u043e\u043a\u0430 " + event.getEntity().getPlayer().getName());
             for (exp = playerInfo.getExp() + amount; exp >= new_lvl_exp; exp -= new_lvl_exp) {
                 killer.sendMessage(ChatColor.YELLOW + "\u0412\u044b \u043f\u043e\u0432\u044b\u0441\u0438\u043b\u0438 \u0441\u0432\u043e\u0439 \u0443\u0440\u043e\u0432\u0435\u043d\u044c \u0434\u043e " + ++lvl + '!');
@@ -76,7 +76,7 @@ public class ExpGaining
                 killer.setHealthScale(killer.getHealthScale() + 2.0);
                 killer.sendMessage(ChatColor.YELLOW + "\u0412\u0430\u0448\u0435 \u0437\u0434\u043e\u0440\u043e\u0432\u044c\u0435 \u0432\u043e\u0437\u0440\u043e\u0441\u043b\u043e \u0434\u043e " + killer.getHealthScale() + '.');
             }
-            JsonUtils.createPlayerInfo(killer.getName(), klass, lvl, exp);
+            JsonUtils.createPlayerInfo(killer.getName(), selectedClass, lvl, exp);
         }
     }
 }

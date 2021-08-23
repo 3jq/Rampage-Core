@@ -29,22 +29,18 @@ public class JacksonParser {
                 if (!key.equals("playersInfo")) continue;
                 parser.nextToken();
                 while (parser.nextToken() != JsonToken.END_ARRAY) {
-                    UUID id = null;
                     String nickname = null;
-                    String klass = null;
+                    String selectedClass = null;
                     int lvl = 0;
                     int exp = 0;
                     while (parser.nextToken() != JsonToken.END_OBJECT) {
                         key = parser.getCurrentName();
                         parser.nextToken();
-                        if (key.equals("id")) {
-                            id = UUID.fromString(parser.getText());
-                        }
                         if (key.equals("nickname")) {
                             nickname = parser.getText();
                         }
-                        if (key.equals("klass")) {
-                            klass = parser.getText();
+                        if (key.equals("selectedClass")) {
+                            selectedClass = parser.getText();
                         }
                         if (key.equals("lvl")) {
                             lvl = Integer.parseInt(parser.getText());
@@ -52,7 +48,7 @@ public class JacksonParser {
                         if (!key.equals("exp")) continue;
                         exp = Integer.parseInt(parser.getText());
                     }
-                    PlayerInfo playerInfo = new PlayerInfo(nickname, klass, lvl, exp);
+                    PlayerInfo playerInfo = new PlayerInfo(nickname, selectedClass, lvl, exp);
                     playerInfoList.add(playerInfo);
                 }
             }

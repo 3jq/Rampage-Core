@@ -2,23 +2,26 @@ package dev.rampage.rampagecore.json;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import dev.rampage.rampagecore.RampageCore;
 
 import java.io.*;
 import java.util.List;
 
 public class JsonUtils {
-    public static void createPlayerInfo(String nickname, String klass, int lvl, int exp) {
+    public static void createPlayerInfo(String nickname, String selectedClass, int lvl, int exp) {
         Root root = JacksonParser.parse();
         List<PlayerInfo> list = root.getListPlayerInfo();
         if (null != list) {
             list.removeIf(playerInfo -> playerInfo.getNickname().equals(nickname));
-            list.add(new PlayerInfo(nickname, klass, lvl, exp));
+            list.add(new PlayerInfo(nickname, selectedClass, lvl, exp));
         }
+
         root.setListPlayerInfo(list);
         File file = new File(Path.getFileName());
         if (file.delete()) {
-            System.out.println("Deleted");
+            RampageCore.logger.info("Deleted " + nickname + "config file.");
         }
+
         JsonUtils.createJSON();
         JsonUtils.updateJSON(root);
     }

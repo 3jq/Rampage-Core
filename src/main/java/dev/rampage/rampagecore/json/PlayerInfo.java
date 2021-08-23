@@ -46,7 +46,7 @@ public class PlayerInfo {
     }
 
     public String toString() {
-        return "PlayerInfo{nickname=" + this.nickname + ", klass=" + this.selectedClass + ", lvl=" + this.lvl + ", exp=" + this.exp + '}';
+        return "PlayerInfo{nickname=" + this.nickname + ", selectedClass=" + this.selectedClass + ", lvl=" + this.lvl + ", exp=" + this.exp + '}';
     }
 }
 
