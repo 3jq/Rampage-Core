@@ -11,4 +11,6 @@
 При больших изменениях, следующим коммитом обязательно сделать оптимизацию и очищение костылей и плохого кода.
 
 TODO:
+- Decode all the strings from UTF-8;
+- Implement OOP;
 - Geomant Class.
