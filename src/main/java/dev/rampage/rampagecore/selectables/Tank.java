@@ -1,12 +1,13 @@
-package dev.rampage.rampagecore.classes;
+package dev.rampage.rampagecore.selectables;
 
 import dev.rampage.rampagecore.RampageCore;
+import dev.rampage.rampagecore.api.selectable.Selectable;
 import dev.rampage.rampagecore.json.JsonUtils;
 import dev.rampage.rampagecore.json.PlayerInfo;
-import dev.rampage.rampagecore.utils.ActionBar;
-import dev.rampage.rampagecore.utils.ClanUtils;
-import dev.rampage.rampagecore.utils.Cooldown;
-import dev.rampage.rampagecore.utils.PEX;
+import dev.rampage.rampagecore.api.utils.ActionBar;
+import dev.rampage.rampagecore.api.utils.ClanUtils;
+import dev.rampage.rampagecore.api.utils.Cooldown;
+import dev.rampage.rampagecore.api.utils.PEX;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -27,18 +28,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+@Selectable.Manifest(name = "tank")
 public class Tank
-        implements Listener {
-    private final RampageCore plugin;
+        extends Selectable {
+
     HashMap<UUID, Long> cooldownResetAndBuff = new HashMap();
     HashMap<UUID, Long> cooldownPoisonedSkin = new HashMap();
     List<UUID> poisonedSkin = new ArrayList<UUID>();
     HashMap<UUID, Long> cooldownAttraction = new HashMap();
 
-    public Tank(RampageCore plugin) {
-        this.plugin = plugin;
-        this.plugin.getServer().getPluginManager().registerEvents(this, plugin);
-    }
+    public Tank(RampageCore plugin) { super(plugin); }
 
     @EventHandler
     public void poisonedSkin(PlayerInteractEvent event) {

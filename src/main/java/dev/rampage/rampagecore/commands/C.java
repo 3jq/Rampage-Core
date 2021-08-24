@@ -2,9 +2,9 @@ package dev.rampage.rampagecore.commands;
 
 import dev.rampage.rampagecore.json.JsonUtils;
 import dev.rampage.rampagecore.json.PlayerInfo;
-import dev.rampage.rampagecore.utils.ExpGaining;
-import dev.rampage.rampagecore.utils.LP;
-import dev.rampage.rampagecore.utils.RestorePotionEffects;
+import dev.rampage.rampagecore.api.utils.ExpGaining;
+import dev.rampage.rampagecore.api.utils.LP;
+import dev.rampage.rampagecore.api.utils.RestorePotionEffects;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;

@@ -1,4 +1,4 @@
-package dev.rampage.rampagecore.utils;
+package dev.rampage.rampagecore.api.utils;
 
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;

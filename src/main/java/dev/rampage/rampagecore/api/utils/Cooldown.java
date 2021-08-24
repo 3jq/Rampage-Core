@@ -1,4 +1,4 @@
-package dev.rampage.rampagecore.utils;
+package dev.rampage.rampagecore.api.utils;
 
 public class Cooldown {
     public static int SecLeft(Long get_id, int cooldownTime) {

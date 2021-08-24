@@ -1,4 +1,4 @@
-package dev.rampage.rampagecore.utils;
+package dev.rampage.rampagecore.api.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Statistic;

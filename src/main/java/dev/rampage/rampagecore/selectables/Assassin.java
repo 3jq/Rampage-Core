@@ -1,11 +1,12 @@
-package dev.rampage.rampagecore.classes;
+package dev.rampage.rampagecore.selectables;
 
 import dev.rampage.rampagecore.RampageCore;
+import dev.rampage.rampagecore.api.selectable.Selectable;
 import dev.rampage.rampagecore.json.JsonUtils;
-import dev.rampage.rampagecore.utils.ActionBar;
-import dev.rampage.rampagecore.utils.ClanUtils;
-import dev.rampage.rampagecore.utils.PEX;
-import dev.rampage.rampagecore.utils.RandomNum;
+import dev.rampage.rampagecore.api.utils.ActionBar;
+import dev.rampage.rampagecore.api.utils.ClanUtils;
+import dev.rampage.rampagecore.api.utils.PEX;
+import dev.rampage.rampagecore.api.utils.RandomNum;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -30,18 +31,14 @@ import java.util.List;
 import java.util.UUID;
 
 public class Assassin
-        implements Listener {
+        extends Selectable {
 
-    RampageCore plugin;
     HashMap<UUID, Location> map = new HashMap();
     HashMap<UUID, Long> cooldownBurrow = new HashMap();
     HashMap<UUID, Long> antiDoubleInteract = new HashMap();
     HashMap<UUID, Long> cooldownBlindnessArrow = new HashMap();
 
-    public Assassin(RampageCore plugin) {
-        this.plugin = plugin;
-        this.plugin.getServer().getPluginManager().registerEvents(this, plugin);
-    }
+    public Assassin(RampageCore plugin) { super(plugin); }
 
     @EventHandler
     public void loner(EntityDamageByEntityEvent event) {

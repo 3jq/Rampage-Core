@@ -1,11 +1,12 @@
-package dev.rampage.rampagecore.classes;
+package dev.rampage.rampagecore.selectables;
 
 import dev.rampage.rampagecore.RampageCore;
+import dev.rampage.rampagecore.api.selectable.Selectable;
 import dev.rampage.rampagecore.json.JsonUtils;
 import dev.rampage.rampagecore.json.PlayerInfo;
-import dev.rampage.rampagecore.utils.ActionBar;
-import dev.rampage.rampagecore.utils.Cooldown;
-import dev.rampage.rampagecore.utils.PEX;
+import dev.rampage.rampagecore.api.utils.ActionBar;
+import dev.rampage.rampagecore.api.utils.Cooldown;
+import dev.rampage.rampagecore.api.utils.PEX;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -27,9 +28,9 @@ import org.bukkit.util.Vector;
 import java.util.*;
 
 public class Warrior
-        implements Listener {
+        extends Selectable {
+
     final HashMap<UUID, Long> cooldownDash = new HashMap();
-    RampageCore plugin;
     int cooldownTimeDash = 7;
     HashMap<UUID, Long> cooldownShieldBreak = new HashMap();
     HashMap<UUID, Long> cooldownGetPower = new HashMap();
@@ -37,10 +38,7 @@ public class Warrior
     List<PotionEffectType> debuffs = new ArrayList<PotionEffectType>(Arrays.asList(PotionEffectType.BLINDNESS, PotionEffectType.CONFUSION, PotionEffectType.HUNGER, PotionEffectType.LEVITATION, PotionEffectType.POISON, PotionEffectType.SLOW, PotionEffectType.SLOW_DIGGING, PotionEffectType.UNLUCK, PotionEffectType.WEAKNESS, PotionEffectType.WITHER));
     HashMap<UUID, Long> cooldownBerserkMode = new HashMap();
 
-    public Warrior(RampageCore plugin) {
-        this.plugin = plugin;
-        this.plugin.getServer().getPluginManager().registerEvents(this, plugin);
-    }
+    public Warrior(RampageCore plugin) { super(plugin); }
 
     @EventHandler
     public void onPlayerToggleFlight(PlayerToggleFlightEvent event) {
@@ -128,11 +126,11 @@ public class Warrior
             ItemStack item = p.getInventory().getItemInMainHand();
             ArrayList<Material> swords = new ArrayList<Material>(Arrays.asList(Material.WOODEN_SWORD, Material.STONE_SWORD, Material.IRON_SWORD, Material.GOLDEN_SWORD, Material.DIAMOND_SWORD));
             if (swords.contains(item.getType()) && event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-                int secondsLeft;
                 if (!this.cooldownGetPower.containsKey(id)) {
                     this.cooldownGetPower.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
                 }
-                if ((secondsLeft = (int) (this.cooldownGetPower.get(id) / 1000L + (long) cooldownTime - System.currentTimeMillis() / 1000L)) <= 0) {
+
+                if ((int) (this.cooldownGetPower.get(id) / 1000L + (long) cooldownTime - System.currentTimeMillis() / 1000L) <= 0) {
                     p.addPotionEffect(PotionEffectType.INCREASE_DAMAGE.createEffect(duration * 20, 0));
                     p.addPotionEffect(PotionEffectType.REGENERATION.createEffect(duration * 20, 0));
                     this.cooldownGetPower.put(id, System.currentTimeMillis());
@@ -157,11 +155,11 @@ public class Warrior
         PlayerInfo playerInfo = JsonUtils.getPlayerInfoName(p.getName());
         int lvl = playerInfo.getLvl();
         if (PEX.inGroup(p, "warrior") && lvl >= unlock_lvl && event.getMaterial() == Material.GLOWSTONE_DUST) {
-            int secondsLeft;
             if (!this.cooldownImmunity.containsKey(id)) {
                 this.cooldownImmunity.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
             }
-            if ((secondsLeft = Cooldown.SecLeft(this.cooldownImmunity.get(id), cooldownTime + duration)) <= 0) {
+
+            if (Cooldown.SecLeft(this.cooldownImmunity.get(id), cooldownTime + duration) <= 0) {
                 this.cooldownImmunity.put(id, System.currentTimeMillis());
                 p.addPotionEffect(PotionEffectType.GLOWING.createEffect(duration * 20, 0));
                 for (int time = 0; time < duration * 20; time += 5) {

@@ -1,9 +1,10 @@
 package dev.rampage.rampagecore;
 
-import dev.rampage.rampagecore.classes.*;
+import dev.rampage.rampagecore.api.selectable.Selectables;
+import dev.rampage.rampagecore.selectables.*;
 import dev.rampage.rampagecore.commands.C;
 import dev.rampage.rampagecore.commands.CTabCompleter;
-import dev.rampage.rampagecore.utils.*;
+import dev.rampage.rampagecore.api.utils.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 import org.bukkit.ChatColor;
@@ -15,12 +16,14 @@ public final class RampageCore
         extends JavaPlugin {
 
     public static Logger logger;
+    public static Selectables selectables;
 
     static {
         logger = (Logger) LogManager.getLogger("rampagecore");
     }
 
     public void onEnable() {
+        selectables = new Selectables();
         new Healer(this);
         new Tank(this);
         new Warrior(this);

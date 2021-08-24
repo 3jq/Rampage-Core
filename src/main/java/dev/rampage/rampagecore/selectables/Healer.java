@@ -1,12 +1,13 @@
-package dev.rampage.rampagecore.classes;
+package dev.rampage.rampagecore.selectables;
 
 import dev.rampage.rampagecore.RampageCore;
+import dev.rampage.rampagecore.api.selectable.Selectable;
 import dev.rampage.rampagecore.json.JsonUtils;
 import dev.rampage.rampagecore.json.PlayerInfo;
-import dev.rampage.rampagecore.utils.ActionBar;
-import dev.rampage.rampagecore.utils.ClanUtils;
-import dev.rampage.rampagecore.utils.Cooldown;
-import dev.rampage.rampagecore.utils.PEX;
+import dev.rampage.rampagecore.api.utils.ActionBar;
+import dev.rampage.rampagecore.api.utils.ClanUtils;
+import dev.rampage.rampagecore.api.utils.Cooldown;
+import dev.rampage.rampagecore.api.utils.PEX;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -28,9 +29,10 @@ import org.bukkit.util.Vector;
 
 import java.util.*;
 
+@Selectable.Manifest(name = "healer")
 public class Healer
-        implements Listener {
-    private final RampageCore plugin;
+        extends Selectable {
+
     List<EntityType> undeads = new ArrayList<EntityType>(Arrays.asList(EntityType.SKELETON, EntityType.SNOWMAN, EntityType.WITHER_SKELETON, EntityType.WITCH, EntityType.ZOMBIE, EntityType.HUSK, EntityType.ZOMBIE_VILLAGER, EntityType.ZOMBIE_HORSE, EntityType.SKELETON_HORSE));
     HashMap<UUID, Long> cooldownMassiveHeal = new HashMap();
     HashMap<UUID, Long> cooldownMassiveRegen = new HashMap();
@@ -38,13 +40,9 @@ public class Healer
     HashMap<UUID, Long> cooldownBattleCry = new HashMap();
     HashMap<UUID, Long> cooldownAlmostDead = new HashMap();
 
-    public Healer(RampageCore plugin) {
-        this.plugin = plugin;
-        this.plugin.getServer().getPluginManager().registerEvents(this, plugin);
-    }
+    public Healer(RampageCore plugin) { super(plugin); }
 
-    @EventHandler
-    public void increaseUndeadDamage(EntityDamageByEntityEvent event) {
+    @EventHandler public void increaseUndeadDamage(EntityDamageByEntityEvent event) {
         if (event.getDamager().getType() == EntityType.PLAYER) {
             Player p = (Player) event.getDamager();
             if (PEX.inGroup(p, "healer") && this.undeads.contains(event.getEntity().getType())) {
@@ -53,8 +51,7 @@ public class Healer
         }
     }
 
-    @EventHandler
-    public void massiveHeal(PlayerItemConsumeEvent event) {
+    @EventHandler public void massiveHeal(PlayerItemConsumeEvent event) {
         int cooldownTime = 12;
         int unlock_lvl = 10;
         if (event.getItem().getType() == Material.POTION) {
@@ -93,8 +90,7 @@ public class Healer
         }
     }
 
-    @EventHandler
-    public void massiveRegen(PlayerItemConsumeEvent event) {
+    @EventHandler public void massiveRegen(PlayerItemConsumeEvent event) {
         int cooldownTime = 25;
         int unlock_lvl = 10;
         int duration = 10;
@@ -134,8 +130,7 @@ public class Healer
         }
     }
 
-    @EventHandler
-    public void regainHealth(EntityRegainHealthEvent event) {
+    @EventHandler public void regainHealth(EntityRegainHealthEvent event) {
         int unlock_lvl = 20;
         Entity entity = event.getEntity();
         if (entity.getType() == EntityType.PLAYER) {
@@ -150,8 +145,7 @@ public class Healer
         }
     }
 
-    @EventHandler
-    public void rejection(PlayerInteractEvent event) {
+    @EventHandler public void rejection(PlayerInteractEvent event) {
         int cooldownTime = 15;
         int r = 5;
         int unlock_lvl = 30;
@@ -188,8 +182,7 @@ public class Healer
         }
     }
 
-    @EventHandler
-    public void battleCry(PlayerInteractEvent event) {
+    @EventHandler public void battleCry(PlayerInteractEvent event) {
         int cooldownTime = 40;
         int duration = 10;
         int r = 10;
@@ -228,8 +221,7 @@ public class Healer
         }
     }
 
-    @EventHandler
-    public void almostDead(EntityDamageEvent event) {
+    @EventHandler public void almostDead(EntityDamageEvent event) {
         int cooldownTime = 300;
         int unlock_lvl = 50;
         Entity entity = event.getEntity();

@@ -1,4 +1,4 @@
-package dev.rampage.rampagecore.utils;
+package dev.rampage.rampagecore.api.utils;
 
 import dev.rampage.rampagecore.json.JsonUtils;
 import org.bukkit.entity.Player;

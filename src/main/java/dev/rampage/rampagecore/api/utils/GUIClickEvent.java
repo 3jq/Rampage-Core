@@ -1,4 +1,4 @@
-package dev.rampage.rampagecore.utils;
+package dev.rampage.rampagecore.api.utils;
 
 import dev.rampage.rampagecore.RampageCore;
 import org.bukkit.ChatColor;
