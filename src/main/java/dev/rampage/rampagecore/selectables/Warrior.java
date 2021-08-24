@@ -14,7 +14,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -35,7 +34,7 @@ public class Warrior
     HashMap<UUID, Long> cooldownShieldBreak = new HashMap();
     HashMap<UUID, Long> cooldownGetPower = new HashMap();
     HashMap<UUID, Long> cooldownImmunity = new HashMap();
-    List<PotionEffectType> debuffs = new ArrayList<PotionEffectType>(Arrays.asList(PotionEffectType.BLINDNESS, PotionEffectType.CONFUSION, PotionEffectType.HUNGER, PotionEffectType.LEVITATION, PotionEffectType.POISON, PotionEffectType.SLOW, PotionEffectType.SLOW_DIGGING, PotionEffectType.UNLUCK, PotionEffectType.WEAKNESS, PotionEffectType.WITHER));
+    List<PotionEffectType> debuffs = new ArrayList<>(Arrays.asList(PotionEffectType.BLINDNESS, PotionEffectType.CONFUSION, PotionEffectType.HUNGER, PotionEffectType.LEVITATION, PotionEffectType.POISON, PotionEffectType.SLOW, PotionEffectType.SLOW_DIGGING, PotionEffectType.UNLUCK, PotionEffectType.WEAKNESS, PotionEffectType.WITHER));
     HashMap<UUID, Long> cooldownBerserkMode = new HashMap();
 
     public Warrior(RampageCore plugin) { super(plugin); }
@@ -124,7 +123,7 @@ public class Warrior
         int lvl = playerInfo.getLvl();
         if (PEX.inGroup(p, "warrior") && lvl >= unlock_lvl) {
             ItemStack item = p.getInventory().getItemInMainHand();
-            ArrayList<Material> swords = new ArrayList<Material>(Arrays.asList(Material.WOODEN_SWORD, Material.STONE_SWORD, Material.IRON_SWORD, Material.GOLDEN_SWORD, Material.DIAMOND_SWORD));
+            ArrayList<Material> swords = new ArrayList<>(Arrays.asList(Material.WOODEN_SWORD, Material.STONE_SWORD, Material.IRON_SWORD, Material.GOLDEN_SWORD, Material.DIAMOND_SWORD, Material.NETHERITE_SWORD));
             if (swords.contains(item.getType()) && event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
                 if (!this.cooldownGetPower.containsKey(id)) {
                     this.cooldownGetPower.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
@@ -194,11 +193,11 @@ public class Warrior
             PlayerInfo playerInfo = JsonUtils.getPlayerInfoName(p.getName());
             int lvl = playerInfo.getLvl();
             if (PEX.inGroup(p, "warrior") && lvl >= unlock_lvl && (afterHP = p.getHealth() - event.getFinalDamage()) <= p.getHealthScale() * 0.3 && afterHP > 0.0) {
-                int secLeft;
                 if (!this.cooldownBerserkMode.containsKey(id)) {
                     this.cooldownBerserkMode.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
                 }
-                if ((secLeft = Cooldown.SecLeft(this.cooldownBerserkMode.get(id), cooldownTime)) <= 0) {
+
+                if (Cooldown.SecLeft(this.cooldownBerserkMode.get(id), cooldownTime) <= 0) {
                     this.cooldownBerserkMode.put(id, System.currentTimeMillis());
                     p.addPotionEffect(PotionEffectType.REGENERATION.createEffect(duration * 20, 0));
                     p.addPotionEffect(PotionEffectType.INCREASE_DAMAGE.createEffect(duration * 20, 0));
