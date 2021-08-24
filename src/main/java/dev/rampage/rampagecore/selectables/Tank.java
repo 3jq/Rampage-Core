@@ -37,21 +37,20 @@ public class Tank
 
     public Tank(RampageCore plugin) { super(plugin); }
 
-    @EventHandler
-    public void poisonedSkin(PlayerInteractEvent event) {
+    @EventHandler public void poisonedSkin(PlayerInteractEvent event) {
         int cooldownTime = 25;
         int duration = 8;
-        int unlock_lvl = 30;
+        int unlockLvl = 30;
         final Player p = event.getPlayer();
         final UUID id = p.getUniqueId();
         PlayerInfo playerInfo = JsonUtils.getPlayerInfoName(p.getName());
         int lvl = playerInfo.getLvl();
-        if (RampageCore.selectables.isSelectedClass(p, "tank") && lvl >= unlock_lvl && event.getMaterial() == Material.LEATHER) {
+        if (RampageCore.selectables.isSelectedClass(p, "tank") && lvl >= unlockLvl && event.getMaterial() == Material.LEATHER) {
             if (!this.cooldownPoisonedSkin.containsKey(id)) {
                 this.cooldownPoisonedSkin.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
             }
 
-            if (Cooldown.SecLeft(this.cooldownPoisonedSkin.get(id), cooldownTime) <= 0) {
+            if (Cooldown.secLeft(this.cooldownPoisonedSkin.get(id), cooldownTime) <= 0) {
                 this.cooldownPoisonedSkin.put(id, System.currentTimeMillis());
                 this.poisonedSkin.add(id);
 
@@ -62,7 +61,6 @@ public class Tank
                 }.runTaskLater(this.plugin, duration * 20);
 
                 new BukkitRunnable() {
-
                     public void run() {
                         ActionBar.send(p, ChatColor.GREEN + "Ядовитая кожа перезарядилась!");
                     }
@@ -71,8 +69,7 @@ public class Tank
         }
     }
 
-    @EventHandler
-    public void poisonedSkinTouch(EntityDamageByEntityEvent event) {
+    @EventHandler public void poisonedSkinTouch(EntityDamageByEntityEvent event) {
         int duration = 6;
         if (event.getEntity().getType() == EntityType.PLAYER && event.getDamager().getType() == EntityType.PLAYER) {
             Player victim = (Player) event.getEntity();
@@ -85,21 +82,20 @@ public class Tank
         }
     }
 
-    @EventHandler
-    public void attraction(PlayerInteractEvent event) {
+    @EventHandler public void attraction(PlayerInteractEvent event) {
         int cooldownTime = 20;
         int r = 10;
-        int unlock_lvl = 40;
+        int unlockLvl = 40;
         final Player p = event.getPlayer();
         UUID id = p.getUniqueId();
         PlayerInfo playerInfo = JsonUtils.getPlayerInfoName(p.getName());
         int lvl = playerInfo.getLvl();
-        if (RampageCore.selectables.isSelectedClass(p, "tank") && lvl >= unlock_lvl && event.getMaterial() == Material.SUGAR) {
+        if (RampageCore.selectables.isSelectedClass(p, "tank") && lvl >= unlockLvl && event.getMaterial() == Material.SUGAR) {
             if (!this.cooldownAttraction.containsKey(id)) {
                 this.cooldownAttraction.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
             }
 
-            if (Cooldown.SecLeft(this.cooldownAttraction.get(id), cooldownTime) <= 0) {
+            if (Cooldown.secLeft(this.cooldownAttraction.get(id), cooldownTime) <= 0) {
                 this.cooldownAttraction.put(id, System.currentTimeMillis());
                 Location pLoc = p.getLocation();
                 Vector pVector = pLoc.toVector();
@@ -114,7 +110,6 @@ public class Tank
                     e.setVelocity(vector);
                 }
                 new BukkitRunnable() {
-
                     public void run() {
                         ActionBar.send(p, ChatColor.GREEN + "Притяжение перезарядилось!");
                     }
@@ -123,16 +118,15 @@ public class Tank
         }
     }
 
-    @EventHandler
-    public void resetAndBuff(PlayerInteractEvent event) {
+    @EventHandler public void resetAndBuff(PlayerInteractEvent event) {
         int cooldownTime = 40;
         int duration = 8;
-        int unlock_lvl = 50;
+        int unlockLvl = 50;
         final Player p = event.getPlayer();
         UUID id = p.getUniqueId();
         PlayerInfo playerInfo = JsonUtils.getPlayerInfoName(p.getName());
         int lvl = playerInfo.getLvl();
-        if (RampageCore.selectables.isSelectedClass(p, "tank") && lvl >= unlock_lvl && p.getInventory().getItemInMainHand().getType() == Material.APPLE && event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+        if (RampageCore.selectables.isSelectedClass(p, "tank") && lvl >= unlockLvl && p.getInventory().getItemInMainHand().getType() == Material.APPLE && event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             if (!this.cooldownResetAndBuff.containsKey(id)) {
                 this.cooldownResetAndBuff.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
             }
@@ -153,7 +147,6 @@ public class Tank
                 p.addPotionEffect(PotionEffectType.FIRE_RESISTANCE.createEffect(duration * 20, 0));
 
                 new BukkitRunnable() {
-
                     public void run() {
                         ActionBar.send(p, ChatColor.GREEN + "Очищение перезарядилось!");
                     }

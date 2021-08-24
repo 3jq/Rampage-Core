@@ -37,13 +37,12 @@ public class Assassin
 
     public Assassin(RampageCore plugin) { super(plugin); }
 
-    @EventHandler
-    public void loner(EntityDamageByEntityEvent event) {
+    @EventHandler public void loner(EntityDamageByEntityEvent event) {
         if (event.getDamager().getType() == EntityType.PLAYER && event.getEntity().getType() == EntityType.PLAYER) {
             Player p = (Player) event.getDamager();
             double r = 16.0;
-            int unlock_lvl = 10;
-            if (RampageCore.selectables.isSelectedClass(p, "assassin") && JsonUtils.getPlayerInfoName(p.getName()).getLvl() >= unlock_lvl) {
+            int unlockLvl = 10;
+            if (RampageCore.selectables.isSelectedClass(p, "assassin") && JsonUtils.getPlayerInfoName(p.getName()).getLvl() >= unlockLvl) {
                 List<Entity> list = p.getNearbyEntities(r, r, r);
                 int count = 0;
 
@@ -59,27 +58,25 @@ public class Assassin
         }
     }
 
-    @EventHandler
-    public void trauma(EntityDamageByEntityEvent event) {
+    @EventHandler public void trauma(EntityDamageByEntityEvent event) {
         int duration = 4;
-        int unlock_lvl = 20;
+        int unlockLvl = 20;
         if (event.getDamager().getType() == EntityType.PLAYER && event.getEntity().getType() == EntityType.PLAYER) {
             Player damager = (Player) event.getDamager();
             Player victim = (Player) event.getEntity();
-            if (RampageCore.selectables.isSelectedClass(damager, "assassin") && JsonUtils.getPlayerInfoName(damager.getName()).getLvl() >= unlock_lvl && (double) ((int) (Math.random() * (100.0 - 1.0 + 1.0))) <= 20.0) {
+            if (RampageCore.selectables.isSelectedClass(damager, "assassin") && JsonUtils.getPlayerInfoName(damager.getName()).getLvl() >= unlockLvl && (double) ((int) (Math.random() * (100.0 - 1.0 + 1.0))) <= 20.0) {
                 victim.addPotionEffect(PotionEffectType.SLOW.createEffect(duration * 20, 3));
             }
         }
     }
 
-    @EventHandler
-    public void burrowOn(PlayerInteractEvent event) {
+    @EventHandler public void burrowOn(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
         UUID id = player.getUniqueId();
         int cooldownTime = 7;
         int duration = 3600;
-        int unlock_lvl = 20;
-        if (RampageCore.selectables.isSelectedClass(player, "assassin") && JsonUtils.getPlayerInfoName(player.getName()).getLvl() >= unlock_lvl && event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && player.getInventory().getItemInMainHand().getType() == Material.WOODEN_SHOVEL) {
+        int unlockLvl = 20;
+        if (RampageCore.selectables.isSelectedClass(player, "assassin") && JsonUtils.getPlayerInfoName(player.getName()).getLvl() >= unlockLvl && event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && player.getInventory().getItemInMainHand().getType() == Material.WOODEN_SHOVEL) {
             if (!this.cooldownBurrow.containsKey(id)) {
                 this.cooldownBurrow.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
             }
@@ -121,8 +118,7 @@ public class Assassin
         }
     }
 
-    @EventHandler
-    public void burrowOff(PlayerMoveEvent event) {
+    @EventHandler public void burrowOff(PlayerMoveEvent event) {
         Location lastLoc;
         Player player = event.getPlayer();
         UUID id = player.getUniqueId();
@@ -133,16 +129,15 @@ public class Assassin
         }
     }
 
-    @EventHandler
-    public void blindnessArrow(EntityDamageByEntityEvent event) {
+    @EventHandler public void blindnessArrow(EntityDamageByEntityEvent event) {
         int cooldownTime = 20;
         int duration = 5;
-        int unlock_lvl = 50;
+        int unlockLvl = 50;
         if (event.getEntity().getType().equals(EntityType.PLAYER) && event.getDamager().getType().equals(EntityType.PLAYER)) {
             final Player player = (Player) event.getDamager();
             UUID id = player.getUniqueId();
             ItemStack item = player.getInventory().getItemInMainHand();
-            if (item.getType() == Material.TIPPED_ARROW && RampageCore.selectables.isSelectedClass(player, "assassin") && JsonUtils.getPlayerInfoName(player.getName()).getLvl() >= unlock_lvl) {
+            if (item.getType() == Material.TIPPED_ARROW && RampageCore.selectables.isSelectedClass(player, "assassin") && JsonUtils.getPlayerInfoName(player.getName()).getLvl() >= unlockLvl) {
                 RampageCore.logger.info(player.getDisplayName() + " is assassin.");
                 if (!this.cooldownBlindnessArrow.containsKey(id)) {
                     this.cooldownBlindnessArrow.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
@@ -157,7 +152,6 @@ public class Assassin
 
                     this.cooldownBlindnessArrow.put(id, System.currentTimeMillis());
                     new BukkitRunnable() {
-
                         public void run() {
                             ActionBar.send(player, ChatColor.GREEN + "Ослепление перезарядилось!");
                         }

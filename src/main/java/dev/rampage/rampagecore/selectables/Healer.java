@@ -51,7 +51,7 @@ public class Healer
 
     @EventHandler public void massiveHeal(PlayerItemConsumeEvent event) {
         int cooldownTime = 12;
-        int unlock_lvl = 10;
+        int unlockLvl = 10;
         if (event.getItem().getType() == Material.POTION) {
             final Player player = event.getPlayer();
             UUID id = player.getUniqueId();
@@ -61,7 +61,7 @@ public class Healer
             if (potionMeta.getBasePotionData().getType().equals(PotionType.INSTANT_HEAL) && RampageCore.selectables.isSelectedClass(player, "healer")) {
                 int r = 10;
                 List<Entity> list = player.getNearbyEntities(r, r, r);
-                if (lvl >= unlock_lvl) {
+                if (lvl >= unlockLvl) {
                     if (!this.cooldownMassiveHeal.containsKey(id)) {
                         this.cooldownMassiveHeal.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
                     }
@@ -90,7 +90,7 @@ public class Healer
 
     @EventHandler public void massiveRegen(PlayerItemConsumeEvent event) {
         int cooldownTime = 25;
-        int unlock_lvl = 10;
+        int unlockLvl = 10;
         int duration = 10;
         if (event.getItem().getType() == Material.POTION) {
             final Player player = event.getPlayer();
@@ -101,7 +101,7 @@ public class Healer
                 int lvl = playerInfo.getLvl();
                 int r = 10;
                 List<Entity> list = player.getNearbyEntities(r, r, r);
-                if (lvl >= unlock_lvl) {
+                if (lvl >= unlockLvl) {
                     if (!this.cooldownMassiveRegen.containsKey(id)) {
                         this.cooldownMassiveRegen.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
                     }
@@ -129,7 +129,7 @@ public class Healer
     }
 
     @EventHandler public void regainHealth(EntityRegainHealthEvent event) {
-        int unlock_lvl = 20;
+        int unlockLvl = 20;
         Entity entity = event.getEntity();
         if (entity.getType() == EntityType.PLAYER) {
             EntityRegainHealthEvent.RegainReason reason;
@@ -137,7 +137,7 @@ public class Healer
             UUID id = player.getUniqueId();
             PlayerInfo playerInfo = JsonUtils.getPlayerInfoName(player.getName());
             int lvl = playerInfo.getLvl();
-            if (RampageCore.selectables.isSelectedClass(player, "healer") && ((reason = event.getRegainReason()) == EntityRegainHealthEvent.RegainReason.SATIATED || reason == EntityRegainHealthEvent.RegainReason.MAGIC || reason == EntityRegainHealthEvent.RegainReason.MAGIC_REGEN || reason == EntityRegainHealthEvent.RegainReason.EATING) && lvl >= unlock_lvl) {
+            if (RampageCore.selectables.isSelectedClass(player, "healer") && ((reason = event.getRegainReason()) == EntityRegainHealthEvent.RegainReason.SATIATED || reason == EntityRegainHealthEvent.RegainReason.MAGIC || reason == EntityRegainHealthEvent.RegainReason.MAGIC_REGEN || reason == EntityRegainHealthEvent.RegainReason.EATING) && lvl >= unlockLvl) {
                 event.setAmount(event.getAmount() * 1.2);
             }
         }
@@ -146,17 +146,17 @@ public class Healer
     @EventHandler public void rejection(PlayerInteractEvent event) {
         int cooldownTime = 15;
         int r = 5;
-        int unlock_lvl = 30;
+        int unlockLvl = 30;
         final Player p = event.getPlayer();
         UUID id = p.getUniqueId();
         PlayerInfo playerInfo = JsonUtils.getPlayerInfoName(p.getName());
         int lvl = playerInfo.getLvl();
-        if (RampageCore.selectables.isSelectedClass(p, "healer") && lvl >= unlock_lvl && event.getMaterial() == Material.SUGAR) {
+        if (RampageCore.selectables.isSelectedClass(p, "healer") && lvl >= unlockLvl && event.getMaterial() == Material.SUGAR) {
             if (!this.cooldownRejection.containsKey(id)) {
                 this.cooldownRejection.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
             }
 
-            if (Cooldown.SecLeft(this.cooldownRejection.get(id), cooldownTime) <= 0) {
+            if (Cooldown.secLeft(this.cooldownRejection.get(id), cooldownTime) <= 0) {
                 this.cooldownRejection.put(id, System.currentTimeMillis());
                 Location pLoc = p.getLocation();
                 Vector pVector = pLoc.toVector();
@@ -184,19 +184,19 @@ public class Healer
         int cooldownTime = 40;
         int duration = 10;
         int r = 10;
-        int unlock_lvl = 40;
+        int unlockLvl = 40;
         final Player p = event.getPlayer();
         UUID id = p.getUniqueId();
         PlayerInfo playerInfo = JsonUtils.getPlayerInfoName(p.getName());
         int lvl = playerInfo.getLvl();
-        if (RampageCore.selectables.isSelectedClass(p, "healer") && lvl >= unlock_lvl) {
+        if (RampageCore.selectables.isSelectedClass(p, "healer") && lvl >= unlockLvl) {
             ArrayList<Material> swords = new ArrayList<>(Arrays.asList(Material.WOODEN_SWORD, Material.STONE_SWORD, Material.IRON_SWORD, Material.GOLDEN_SWORD, Material.DIAMOND_SWORD));
             if (swords.contains(event.getMaterial())) {
                 if (!this.cooldownBattleCry.containsKey(id)) {
                     this.cooldownBattleCry.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
                 }
 
-                if (Cooldown.SecLeft(this.cooldownBattleCry.get(id), cooldownTime) <= 0) {
+                if (Cooldown.secLeft(this.cooldownBattleCry.get(id), cooldownTime) <= 0) {
                     this.cooldownBattleCry.put(id, System.currentTimeMillis());
                     p.addPotionEffect(PotionEffectType.SPEED.createEffect(duration * 20, 0));
                     p.addPotionEffect(PotionEffectType.FIRE_RESISTANCE.createEffect(duration * 20, 0));
@@ -219,7 +219,7 @@ public class Healer
 
     @EventHandler public void almostDead(EntityDamageEvent event) {
         int cooldownTime = 300;
-        int unlock_lvl = 50;
+        int unlockLvl = 50;
         Entity entity = event.getEntity();
         if (event.getEntityType() == EntityType.PLAYER) {
             final Player player = (Player) entity;
@@ -227,7 +227,7 @@ public class Healer
             PlayerInfo playerInfo = JsonUtils.getPlayerInfoName(player.getName());
             int lvl = playerInfo.getLvl();
             double damage = event.getFinalDamage();
-            if (damage >= player.getHealth() && RampageCore.selectables.isSelectedClass(player, "healer") && lvl >= unlock_lvl) {
+            if (damage >= player.getHealth() && RampageCore.selectables.isSelectedClass(player, "healer") && lvl >= unlockLvl) {
                 if (!this.cooldownAlmostDead.containsKey(player.getUniqueId())) {
                     this.cooldownAlmostDead.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
                 }

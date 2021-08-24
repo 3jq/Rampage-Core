@@ -14,7 +14,7 @@ import org.bukkit.potion.PotionEffectType;
 public class ExpGainingListener
         implements Listener {
 
-    public static double global_buster = 1.0;
+    public static double globalBuster = 1.0;
 
     public ExpGainingListener(RampageCore plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
@@ -29,14 +29,14 @@ public class ExpGainingListener
         Player killer = event.getEntity().getKiller();
         if (killer != null) {
             PlayerInfo playerInfo = JsonUtils.getPlayerInfoName(killer.getName());
-            int amount = (int) ((double) event.getDroppedExp() * global_buster);
+            int amount = (int) ((double) event.getDroppedExp() * globalBuster);
             int exp = playerInfo.getExp() + amount;
             int lvl = playerInfo.getLvl();
-            int new_lvl_exp = ExpGainingListener.calcNewLvl(lvl);
+            int newLvlExp = ExpGainingListener.calcNewLvl(lvl);
             String selectedClass = playerInfo.getSelectedClass();
-            while (exp >= new_lvl_exp) {
-                exp -= new_lvl_exp;
-                new_lvl_exp = ExpGainingListener.calcNewLvl(++lvl);
+            while (exp >= newLvlExp) {
+                exp -= newLvlExp;
+                newLvlExp = ExpGainingListener.calcNewLvl(++lvl);
                 killer.sendMessage(ChatColor.YELLOW + "Вы повысили свой уровень до " + lvl + '!');
                 if (selectedClass.equals("archer") && lvl >= 30) {
                     killer.addPotionEffect(PotionEffectType.SPEED.createEffect(6000000, 0));
@@ -65,12 +65,12 @@ public class ExpGainingListener
         if (killer != null && killer != event.getEntity().getPlayer()) {
             int exp;
             PlayerInfo playerInfo = JsonUtils.getPlayerInfoName(killer.getName());
-            int amount = (int) ((double) Math.min(event.getDroppedExp(), 100) * global_buster);
+            int amount = (int) ((double) Math.min(event.getDroppedExp(), 100) * globalBuster);
             int lvl = playerInfo.getLvl();
-            int new_lvl_exp = ExpGainingListener.calcNewLvl(lvl);
+            int newLvlExp = ExpGainingListener.calcNewLvl(lvl);
             String selectedClass = playerInfo.getSelectedClass();
             killer.sendMessage("Вы получили " + amount + " опыта за убийство игрока " + event.getEntity().getPlayer().getName());
-            for (exp = playerInfo.getExp() + amount; exp >= new_lvl_exp; exp -= new_lvl_exp) {
+            for (exp = playerInfo.getExp() + amount; exp >= newLvlExp; exp -= newLvlExp) {
                 killer.sendMessage(ChatColor.YELLOW + "Вы повысили свой уровень до " + ++lvl + '!');
                 if (lvl % 20 != 0) continue;
                 killer.setHealthScale(killer.getHealthScale() + 2.0);

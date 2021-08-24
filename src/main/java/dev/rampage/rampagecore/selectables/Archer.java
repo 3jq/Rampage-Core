@@ -50,8 +50,8 @@ public class Archer
         final Player player = event.getPlayer();
         UUID id = player.getUniqueId();
         int cooldownTime = 7;
-        int unlock_lvl = 10;
-        if (RampageCore.selectables.isSelectedClass(player, "archer") && player.getGameMode() == GameMode.SURVIVAL && JsonUtils.getPlayerInfoName(player.getName()).getLvl() >= unlock_lvl) {
+        int unlockLvl = 10;
+        if (RampageCore.selectables.isSelectedClass(player, "archer") && player.getGameMode() == GameMode.SURVIVAL && JsonUtils.getPlayerInfoName(player.getName()).getLvl() >= unlockLvl) {
             if (!this.cooldownRebound.containsKey(id)) {
                 this.cooldownRebound.put(player.getUniqueId(), System.currentTimeMillis() - (long) cooldownTime * 1000L);
             }
@@ -92,8 +92,8 @@ public class Archer
         UUID id = player.getUniqueId();
         int cooldownTime = 20;
         int duration = 7;
-        int unlock_lvl = 20;
-        if (event.getMaterial() == Material.RABBIT_FOOT && RampageCore.selectables.isSelectedClass(player, "archer") && JsonUtils.getPlayerInfoName(player.getName()).getLvl() >= unlock_lvl) {
+        int unlockLvl = 20;
+        if (event.getMaterial() == Material.RABBIT_FOOT && RampageCore.selectables.isSelectedClass(player, "archer") && JsonUtils.getPlayerInfoName(player.getName()).getLvl() >= unlockLvl) {
             if (!this.cooldownRabbitJump.containsKey(id)) {
                 this.cooldownRabbitJump.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
             }
@@ -114,8 +114,8 @@ public class Archer
         final Player player = event.getPlayer();
         UUID id = player.getUniqueId();
         int cooldownTime = 15;
-        int unlock_lvl = 40;
-        if (event.getMaterial() == Material.TIPPED_ARROW && RampageCore.selectables.isSelectedClass(player, "archer") && JsonUtils.getPlayerInfoName(player.getName()).getLvl() >= unlock_lvl && ((PotionMeta) event.getItem().getItemMeta()).getBasePotionData().getType().getEffectType() == PotionEffectType.POISON) {
+        int unlockLvl = 40;
+        if (event.getMaterial() == Material.TIPPED_ARROW && RampageCore.selectables.isSelectedClass(player, "archer") && JsonUtils.getPlayerInfoName(player.getName()).getLvl() >= unlockLvl && ((PotionMeta) event.getItem().getItemMeta()).getBasePotionData().getType().getEffectType() == PotionEffectType.POISON) {
             if (!this.cooldownPoisonArrow.containsKey(id)) {
                 this.cooldownPoisonArrow.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
             }
@@ -137,8 +137,8 @@ public class Archer
         final Player p = event.getPlayer();
         final UUID id = p.getUniqueId();
         int cooldownTime = 30;
-        int unlock_lvl = 50;
-        if (RampageCore.selectables.isSelectedClass(p, "archer") && JsonUtils.getPlayerInfoName(p.getName()).getLvl() >= unlock_lvl && event.getMaterial() == Material.FEATHER) {
+        int unlockLvl = 50;
+        if (RampageCore.selectables.isSelectedClass(p, "archer") && JsonUtils.getPlayerInfoName(p.getName()).getLvl() >= unlockLvl && event.getMaterial() == Material.FEATHER) {
             if (!this.cooldownAscent.containsKey(id)) {
                 this.cooldownAscent.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
             }
@@ -162,8 +162,8 @@ public class Archer
         if (event.getEntityType().equals(EntityType.PLAYER)) {
             Player p = (Player) event.getEntity();
             UUID id = p.getUniqueId();
-            int unlock_lvl = 50;
-            if (RampageCore.selectables.isSelectedClass(p, "archer") && JsonUtils.getPlayerInfoName(p.getName()).getLvl() >= unlock_lvl && this.damageAscent.containsKey(id) && event.getCause() == EntityDamageEvent.DamageCause.FALL) {
+            int unlockLvl = 50;
+            if (RampageCore.selectables.isSelectedClass(p, "archer") && JsonUtils.getPlayerInfoName(p.getName()).getLvl() >= unlockLvl && this.damageAscent.containsKey(id) && event.getCause() == EntityDamageEvent.DamageCause.FALL) {
                 this.damageAscent.remove(id);
                 event.setCancelled(true);
             }

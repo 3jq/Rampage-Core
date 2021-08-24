@@ -67,11 +67,11 @@ public class C
                     String selectedClass = playerInfo.getSelectedClass();
                     int lvl = playerInfo.getLvl();
                     int exp = playerInfo.getExp();
-                    int new_lvl_exp = ExpGainingListener.calcNewLvl(lvl);
+                    int newLvlExp = ExpGainingListener.calcNewLvl(lvl);
                     player.sendMessage(ChatColor.DARK_RED + "Статистика игрока " + ChatColor.AQUA + name);
                     player.sendMessage(ChatColor.YELLOW + "Класс: " + ChatColor.GREEN + selectedClass);
                     player.sendMessage(ChatColor.YELLOW + "Уровень: " + ChatColor.WHITE + lvl);
-                    player.sendMessage(ChatColor.YELLOW + "Опыт: " + ChatColor.WHITE + exp + '/' + new_lvl_exp);
+                    player.sendMessage(ChatColor.YELLOW + "Опыт: " + ChatColor.WHITE + exp + '/' + newLvlExp);
                     break;
                 }
 
@@ -91,11 +91,11 @@ public class C
                 String selectedClass = playerInfo.getSelectedClass();
                 int lvl = playerInfo.getLvl();
                 int exp = playerInfo.getExp();
-                int new_lvl_exp = ExpGainingListener.calcNewLvl(lvl);
+                int newLvlExp = ExpGainingListener.calcNewLvl(lvl);
                 sender.sendMessage(ChatColor.DARK_RED + "Статистика игрока " + ChatColor.AQUA + name);
                 sender.sendMessage(ChatColor.YELLOW + "Класс: " + ChatColor.GREEN + selectedClass);
                 sender.sendMessage(ChatColor.YELLOW + "Уровень: " + ChatColor.WHITE + lvl);
-                sender.sendMessage(ChatColor.YELLOW + "Опыт: " + ChatColor.WHITE + exp + '/' + new_lvl_exp);
+                sender.sendMessage(ChatColor.YELLOW + "Опыт: " + ChatColor.WHITE + exp + '/' + newLvlExp);
                 break;
             }
 
@@ -892,7 +892,7 @@ public class C
                 }
                 double amount = Double.parseDouble(args[1]);
                 amount = Math.max(amount, 500.0);
-                ExpGainingListener.global_buster = amount /= 100.0;
+                ExpGainingListener.globalBuster = amount /= 100.0;
                 Bukkit.broadcastMessage(ChatColor.YELLOW + "Установленное значение получаемого опыта - " + ChatColor.GREEN + amount * 100.0 + "%");
                 break;
             }

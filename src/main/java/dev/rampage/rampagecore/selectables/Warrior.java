@@ -38,14 +38,13 @@ public class Warrior
 
     public Warrior(RampageCore plugin) { super(plugin); }
 
-    @EventHandler
-    public void onPlayerToggleFlight(PlayerToggleFlightEvent event) {
-        int unlock_lvl = 10;
+    @EventHandler public void onPlayerToggleFlight(PlayerToggleFlightEvent event) {
+        int unlockLvl = 10;
         final Player player = event.getPlayer();
         UUID id = player.getUniqueId();
         PlayerInfo playerInfo = JsonUtils.getPlayerInfoName(player.getName());
         int lvl = playerInfo.getLvl();
-        if (RampageCore.selectables.isSelectedClass(player, "warrior") && player.getGameMode() == GameMode.SURVIVAL && lvl >= unlock_lvl) {
+        if (RampageCore.selectables.isSelectedClass(player, "warrior") && player.getGameMode() == GameMode.SURVIVAL && lvl >= unlockLvl) {
             if (!this.cooldownDash.containsKey(id)) {
                 this.cooldownDash.put(id, System.currentTimeMillis() - (long) this.cooldownTimeDash * 1000L);
             }
@@ -72,17 +71,16 @@ public class Warrior
         }
     }
 
-    @EventHandler
-    public void shieldBreak(EntityDamageByEntityEvent event) {
+    @EventHandler public void shieldBreak(EntityDamageByEntityEvent event) {
         int cooldownTime = 7;
-        int unlock_lvl = 20;
+        int unlockLvl = 20;
         if (event.getDamager().getType() == EntityType.PLAYER && event.getEntity().getType() == EntityType.PLAYER) {
             final Player victim = (Player) event.getEntity();
             final Player damager = (Player) event.getDamager();
             UUID id = damager.getUniqueId();
             PlayerInfo playerInfo = JsonUtils.getPlayerInfoName(damager.getName());
             int lvl = playerInfo.getLvl();
-            if (RampageCore.selectables.isSelectedClass(damager, "warrior") && lvl >= unlock_lvl) {
+            if (RampageCore.selectables.isSelectedClass(damager, "warrior") && lvl >= unlockLvl) {
                 if (!this.cooldownShieldBreak.containsKey(id)) {
                     this.cooldownShieldBreak.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
                 }
@@ -110,16 +108,15 @@ public class Warrior
         }
     }
 
-    @EventHandler
-    public void powerUp(PlayerInteractEvent event) {
+    @EventHandler public void powerUp(PlayerInteractEvent event) {
         int cooldownTime = 20;
         int duration = 8;
-        int unlock_lvl = 30;
+        int unlockLvl = 30;
         final Player p = event.getPlayer();
         UUID id = p.getUniqueId();
         PlayerInfo playerInfo = JsonUtils.getPlayerInfoName(p.getName());
         int lvl = playerInfo.getLvl();
-        if (RampageCore.selectables.isSelectedClass(p, "warrior") && lvl >= unlock_lvl) {
+        if (RampageCore.selectables.isSelectedClass(p, "warrior") && lvl >= unlockLvl) {
             ItemStack item = p.getInventory().getItemInMainHand();
             ArrayList<Material> swords = new ArrayList<>(Arrays.asList(Material.WOODEN_SWORD, Material.STONE_SWORD, Material.IRON_SWORD, Material.GOLDEN_SWORD, Material.DIAMOND_SWORD, Material.NETHERITE_SWORD));
             if (swords.contains(item.getType()) && event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
@@ -142,21 +139,20 @@ public class Warrior
         }
     }
 
-    @EventHandler
-    public void immunity(PlayerInteractEvent event) {
+    @EventHandler public void immunity(PlayerInteractEvent event) {
         int cooldownTime = 50;
         int duration = 10;
-        int unlock_lvl = 40;
+        int unlockLvl = 40;
         final Player p = event.getPlayer();
         UUID id = p.getUniqueId();
         PlayerInfo playerInfo = JsonUtils.getPlayerInfoName(p.getName());
         int lvl = playerInfo.getLvl();
-        if (RampageCore.selectables.isSelectedClass(p, "warrior") && lvl >= unlock_lvl && event.getMaterial() == Material.GLOWSTONE_DUST) {
+        if (RampageCore.selectables.isSelectedClass(p, "warrior") && lvl >= unlockLvl && event.getMaterial() == Material.GLOWSTONE_DUST) {
             if (!this.cooldownImmunity.containsKey(id)) {
                 this.cooldownImmunity.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
             }
 
-            if (Cooldown.SecLeft(this.cooldownImmunity.get(id), cooldownTime + duration) <= 0) {
+            if (Cooldown.secLeft(this.cooldownImmunity.get(id), cooldownTime + duration) <= 0) {
                 this.cooldownImmunity.put(id, System.currentTimeMillis());
                 p.addPotionEffect(PotionEffectType.GLOWING.createEffect(duration * 20, 0));
                 for (int time = 0; time < duration * 20; time += 5) {
@@ -179,29 +175,27 @@ public class Warrior
         }
     }
 
-    @EventHandler
-    public void berserkMode(EntityDamageEvent event) {
+    @EventHandler public void berserkMode(EntityDamageEvent event) {
         int cooldownTime = 300;
         int duration = 15;
-        int unlock_lvl = 50;
+        int unlockLvl = 50;
         if (event.getEntity().getType() == EntityType.PLAYER) {
             double afterHP;
             final Player p = (Player) event.getEntity();
             UUID id = p.getUniqueId();
             PlayerInfo playerInfo = JsonUtils.getPlayerInfoName(p.getName());
             int lvl = playerInfo.getLvl();
-            if (RampageCore.selectables.isSelectedClass(p, "warrior") && lvl >= unlock_lvl && (afterHP = p.getHealth() - event.getFinalDamage()) <= p.getHealthScale() * 0.3 && afterHP > 0.0) {
+            if (RampageCore.selectables.isSelectedClass(p, "warrior") && lvl >= unlockLvl && (afterHP = p.getHealth() - event.getFinalDamage()) <= p.getHealthScale() * 0.3 && afterHP > 0.0) {
                 if (!this.cooldownBerserkMode.containsKey(id)) {
                     this.cooldownBerserkMode.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
                 }
 
-                if (Cooldown.SecLeft(this.cooldownBerserkMode.get(id), cooldownTime) <= 0) {
+                if (Cooldown.secLeft(this.cooldownBerserkMode.get(id), cooldownTime) <= 0) {
                     this.cooldownBerserkMode.put(id, System.currentTimeMillis());
                     p.addPotionEffect(PotionEffectType.REGENERATION.createEffect(duration * 20, 0));
                     p.addPotionEffect(PotionEffectType.INCREASE_DAMAGE.createEffect(duration * 20, 0));
                     p.addPotionEffect(PotionEffectType.ABSORPTION.createEffect(duration * 20, 1));
                     new BukkitRunnable() {
-
                         public void run() {
                             ActionBar.send(p, ChatColor.GREEN + "Режим берсерка перезарядился!");
                         }
