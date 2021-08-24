@@ -7,15 +7,12 @@ import dev.rampage.rampagecore.json.PlayerInfo;
 import dev.rampage.rampagecore.api.utils.ActionBar;
 import dev.rampage.rampagecore.api.utils.ClanUtils;
 import dev.rampage.rampagecore.api.utils.Cooldown;
-import dev.rampage.rampagecore.api.utils.PEX;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
@@ -45,7 +42,7 @@ public class Healer
     @EventHandler public void increaseUndeadDamage(EntityDamageByEntityEvent event) {
         if (event.getDamager().getType() == EntityType.PLAYER) {
             Player p = (Player) event.getDamager();
-            if (PEX.inGroup(p, "healer") && this.undeads.contains(event.getEntity().getType())) {
+            if (RampageCore.selectables.isSelectedClass(p, "healer") && this.undeads.contains(event.getEntity().getType())) {
                 event.setDamage(event.getDamage() * 1.3);
             }
         }
@@ -60,7 +57,7 @@ public class Healer
             PotionMeta potionMeta = (PotionMeta) event.getItem().getItemMeta();
             PlayerInfo playerInfo = JsonUtils.getPlayerInfoName(player.getName());
             int lvl = playerInfo.getLvl();
-            if (potionMeta.getBasePotionData().getType().equals(PotionType.INSTANT_HEAL) && PEX.inGroup(player, "healer")) {
+            if (potionMeta.getBasePotionData().getType().equals(PotionType.INSTANT_HEAL) && RampageCore.selectables.isSelectedClass(player, "healer")) {
                 int r = 10;
                 List list = player.getNearbyEntities(r, r, r);
                 if (lvl >= unlock_lvl) {
@@ -99,7 +96,7 @@ public class Healer
             UUID id = player.getUniqueId();
             PlayerInfo playerInfo = JsonUtils.getPlayerInfoName(player.getName());
             PotionMeta potionMeta = (PotionMeta) event.getItem().getItemMeta();
-            if (potionMeta.getBasePotionData().getType().equals(PotionType.REGEN) && PEX.inGroup(player, "healer")) {
+            if (potionMeta.getBasePotionData().getType().equals(PotionType.REGEN) && RampageCore.selectables.isSelectedClass(player, "healer")) {
                 int lvl = playerInfo.getLvl();
                 int r = 10;
                 List list = player.getNearbyEntities(r, r, r);
@@ -139,7 +136,7 @@ public class Healer
             UUID id = player.getUniqueId();
             PlayerInfo playerInfo = JsonUtils.getPlayerInfoName(player.getName());
             int lvl = playerInfo.getLvl();
-            if (PEX.inGroup(player, "healer") && ((reason = event.getRegainReason()) == EntityRegainHealthEvent.RegainReason.SATIATED || reason == EntityRegainHealthEvent.RegainReason.MAGIC || reason == EntityRegainHealthEvent.RegainReason.MAGIC_REGEN || reason == EntityRegainHealthEvent.RegainReason.EATING) && lvl >= unlock_lvl) {
+            if (RampageCore.selectables.isSelectedClass(player, "healer") && ((reason = event.getRegainReason()) == EntityRegainHealthEvent.RegainReason.SATIATED || reason == EntityRegainHealthEvent.RegainReason.MAGIC || reason == EntityRegainHealthEvent.RegainReason.MAGIC_REGEN || reason == EntityRegainHealthEvent.RegainReason.EATING) && lvl >= unlock_lvl) {
                 event.setAmount(event.getAmount() * 1.2);
             }
         }
@@ -153,7 +150,7 @@ public class Healer
         UUID id = p.getUniqueId();
         PlayerInfo playerInfo = JsonUtils.getPlayerInfoName(p.getName());
         int lvl = playerInfo.getLvl();
-        if (PEX.inGroup(p, "healer") && lvl >= unlock_lvl && event.getMaterial() == Material.SUGAR) {
+        if (RampageCore.selectables.isSelectedClass(p, "healer") && lvl >= unlock_lvl && event.getMaterial() == Material.SUGAR) {
             if (!this.cooldownRejection.containsKey(id)) {
                 this.cooldownRejection.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
             }
@@ -191,7 +188,7 @@ public class Healer
         UUID id = p.getUniqueId();
         PlayerInfo playerInfo = JsonUtils.getPlayerInfoName(p.getName());
         int lvl = playerInfo.getLvl();
-        if (PEX.inGroup(p, "healer") && lvl >= unlock_lvl) {
+        if (RampageCore.selectables.isSelectedClass(p, "healer") && lvl >= unlock_lvl) {
             ArrayList<Material> swords = new ArrayList<Material>(Arrays.asList(Material.WOODEN_SWORD, Material.STONE_SWORD, Material.IRON_SWORD, Material.GOLDEN_SWORD, Material.DIAMOND_SWORD));
             if (swords.contains(event.getMaterial())) {
                 if (!this.cooldownBattleCry.containsKey(id)) {
@@ -210,11 +207,9 @@ public class Healer
                         ((Player) e).addPotionEffect(PotionEffectType.FIRE_RESISTANCE.createEffect(duration * 20, 0));
                         ((Player) e).addPotionEffect(PotionEffectType.INCREASE_DAMAGE.createEffect(duration * 20, 0));
                     }
-                    new BukkitRunnable() {
 
-                        public void run() {
-                            ActionBar.send(p, ChatColor.GREEN + "Боевой клич перезарядился!");
-                        }
+                    new BukkitRunnable() {
+                        public void run() { ActionBar.send(p, ChatColor.GREEN + "Боевой клич перезарядился!"); }
                     }.runTaskLater(this.plugin, cooldownTime * 20);
                 }
             }
@@ -231,7 +226,7 @@ public class Healer
             PlayerInfo playerInfo = JsonUtils.getPlayerInfoName(player.getName());
             int lvl = playerInfo.getLvl();
             double damage = event.getFinalDamage();
-            if (damage >= player.getHealth() && PEX.inGroup(player, "healer") && lvl >= unlock_lvl) {
+            if (damage >= player.getHealth() && RampageCore.selectables.isSelectedClass(player, "healer") && lvl >= unlock_lvl) {
                 if (!this.cooldownAlmostDead.containsKey(player.getUniqueId())) {
                     this.cooldownAlmostDead.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
                 }

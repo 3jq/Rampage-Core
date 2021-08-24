@@ -7,7 +7,7 @@ import net.luckperms.api.node.Node;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
-public class LP {
+public class LuckPermsUtils {
     public static void addPermission(UUID id, String permission) {
         RegisteredServiceProvider provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
         if (provider != null) {

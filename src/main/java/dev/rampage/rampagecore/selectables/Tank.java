@@ -7,7 +7,6 @@ import dev.rampage.rampagecore.json.PlayerInfo;
 import dev.rampage.rampagecore.api.utils.ActionBar;
 import dev.rampage.rampagecore.api.utils.ClanUtils;
 import dev.rampage.rampagecore.api.utils.Cooldown;
-import dev.rampage.rampagecore.api.utils.PEX;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -15,7 +14,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -48,7 +46,7 @@ public class Tank
         final UUID id = p.getUniqueId();
         PlayerInfo playerInfo = JsonUtils.getPlayerInfoName(p.getName());
         int lvl = playerInfo.getLvl();
-        if (PEX.inGroup(p, "tank") && lvl >= unlock_lvl && event.getMaterial() == Material.LEATHER) {
+        if (RampageCore.selectables.isSelectedClass(p, "tank") && lvl >= unlock_lvl && event.getMaterial() == Material.LEATHER) {
             if (!this.cooldownPoisonedSkin.containsKey(id)) {
                 this.cooldownPoisonedSkin.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
             }
@@ -58,7 +56,6 @@ public class Tank
                 this.poisonedSkin.add(id);
 
                 new BukkitRunnable() {
-
                     public void run() {
                         Tank.this.poisonedSkin.remove(id);
                     }
@@ -97,7 +94,7 @@ public class Tank
         UUID id = p.getUniqueId();
         PlayerInfo playerInfo = JsonUtils.getPlayerInfoName(p.getName());
         int lvl = playerInfo.getLvl();
-        if (PEX.inGroup(p, "tank") && lvl >= unlock_lvl && event.getMaterial() == Material.SUGAR) {
+        if (RampageCore.selectables.isSelectedClass(p, "tank") && lvl >= unlock_lvl && event.getMaterial() == Material.SUGAR) {
             if (!this.cooldownAttraction.containsKey(id)) {
                 this.cooldownAttraction.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
             }
@@ -135,7 +132,7 @@ public class Tank
         UUID id = p.getUniqueId();
         PlayerInfo playerInfo = JsonUtils.getPlayerInfoName(p.getName());
         int lvl = playerInfo.getLvl();
-        if (PEX.inGroup(p, "tank") && lvl >= unlock_lvl && p.getInventory().getItemInMainHand().getType() == Material.APPLE && event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+        if (RampageCore.selectables.isSelectedClass(p, "tank") && lvl >= unlock_lvl && p.getInventory().getItemInMainHand().getType() == Material.APPLE && event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             if (!this.cooldownResetAndBuff.containsKey(id)) {
                 this.cooldownResetAndBuff.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
             }

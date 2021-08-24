@@ -14,12 +14,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class RestorePotionEffects
+public class Potion
         implements Listener {
 
     final RampageCore plugin;
 
-    public RestorePotionEffects(RampageCore plugin) {
+    public Potion(RampageCore plugin) {
         this.plugin = plugin;
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
@@ -57,11 +57,10 @@ public class RestorePotionEffects
     public void death(PlayerRespawnEvent event) {
         final Player p = event.getPlayer();
         new BukkitRunnable() {
-
             public void run() {
-                RestorePotionEffects.calculateHP(p);
-                RestorePotionEffects.setSpeed(p);
-                RestorePotionEffects.setNightVision(p);
+                Potion.calculateHP(p);
+                Potion.setSpeed(p);
+                Potion.setNightVision(p);
             }
         }.runTaskLater(this.plugin, 5L);
     }
@@ -117,9 +116,9 @@ public class RestorePotionEffects
             RampageCore.logger.info("Created player " + nickname);
         }
 
-        RestorePotionEffects.calculateHP(p);
-        RestorePotionEffects.setSpeed(p);
-        RestorePotionEffects.setNightVision(p);
+        Potion.calculateHP(p);
+        Potion.setSpeed(p);
+        Potion.setNightVision(p);
     }
 }
 

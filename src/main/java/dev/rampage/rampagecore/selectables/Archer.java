@@ -4,8 +4,7 @@ import dev.rampage.rampagecore.RampageCore;
 import dev.rampage.rampagecore.api.selectable.Selectable;
 import dev.rampage.rampagecore.json.JsonUtils;
 import dev.rampage.rampagecore.api.utils.ActionBar;
-import dev.rampage.rampagecore.api.utils.PEX;
-import dev.rampage.rampagecore.api.utils.PlayerJumpEvent;
+import dev.rampage.rampagecore.api.events.PlayerJumpEvent;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -15,7 +14,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -43,7 +41,7 @@ public class Archer
     @EventHandler public void arrowSpeed(ProjectileLaunchEvent event) {
         Arrow arrow;
         Projectile entity = event.getEntity();
-        if (entity.getType() == EntityType.ARROW && (arrow = (Arrow) entity).getShooter() instanceof Player && PEX.inGroup((Player) arrow.getShooter(), "archer")) {
+        if (entity.getType() == EntityType.ARROW && (arrow = (Arrow) entity).getShooter() instanceof Player && RampageCore.selectables.isSelectedClass((Player) arrow.getShooter(), "archer")) {
             arrow.setVelocity(arrow.getVelocity().multiply(1.5));
         }
     }
@@ -53,7 +51,7 @@ public class Archer
         UUID id = player.getUniqueId();
         int cooldownTime = 7;
         int unlock_lvl = 10;
-        if (PEX.inGroup(player, "archer") && player.getGameMode() == GameMode.SURVIVAL && JsonUtils.getPlayerInfoName(player.getName()).getLvl() >= unlock_lvl) {
+        if (RampageCore.selectables.isSelectedClass(player, "archer") && player.getGameMode() == GameMode.SURVIVAL && JsonUtils.getPlayerInfoName(player.getName()).getLvl() >= unlock_lvl) {
             if (!this.cooldownRebound.containsKey(id)) {
                 this.cooldownRebound.put(player.getUniqueId(), System.currentTimeMillis() - (long) cooldownTime * 1000L);
             }
@@ -79,7 +77,7 @@ public class Archer
 
     @EventHandler public void rebound(PlayerJumpEvent event) {
         final Player player = event.getPlayer();
-        if ((PEX.inGroup(player, "archer") || PEX.inGroup(player, "warrior")) && player.getGameMode() == GameMode.SURVIVAL) {
+        if ((RampageCore.selectables.isSelectedClass(player, "archer") || RampageCore.selectables.isSelectedClass(player, "warrior")) && player.getGameMode() == GameMode.SURVIVAL) {
             player.setAllowFlight(true);
             new BukkitRunnable() {
                 public void run() {
@@ -95,7 +93,7 @@ public class Archer
         int cooldownTime = 20;
         int duration = 7;
         int unlock_lvl = 20;
-        if (event.getMaterial() == Material.RABBIT_FOOT && PEX.inGroup(player, "archer") && JsonUtils.getPlayerInfoName(player.getName()).getLvl() >= unlock_lvl) {
+        if (event.getMaterial() == Material.RABBIT_FOOT && RampageCore.selectables.isSelectedClass(player, "archer") && JsonUtils.getPlayerInfoName(player.getName()).getLvl() >= unlock_lvl) {
             if (!this.cooldownRabbitJump.containsKey(id)) {
                 this.cooldownRabbitJump.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
             }
@@ -117,7 +115,7 @@ public class Archer
         UUID id = player.getUniqueId();
         int cooldownTime = 15;
         int unlock_lvl = 40;
-        if (event.getMaterial() == Material.TIPPED_ARROW && PEX.inGroup(player, "archer") && JsonUtils.getPlayerInfoName(player.getName()).getLvl() >= unlock_lvl && ((PotionMeta) event.getItem().getItemMeta()).getBasePotionData().getType().getEffectType() == PotionEffectType.POISON) {
+        if (event.getMaterial() == Material.TIPPED_ARROW && RampageCore.selectables.isSelectedClass(player, "archer") && JsonUtils.getPlayerInfoName(player.getName()).getLvl() >= unlock_lvl && ((PotionMeta) event.getItem().getItemMeta()).getBasePotionData().getType().getEffectType() == PotionEffectType.POISON) {
             if (!this.cooldownPoisonArrow.containsKey(id)) {
                 this.cooldownPoisonArrow.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
             }
@@ -140,7 +138,7 @@ public class Archer
         final UUID id = p.getUniqueId();
         int cooldownTime = 30;
         int unlock_lvl = 50;
-        if (PEX.inGroup(p, "archer") && JsonUtils.getPlayerInfoName(p.getName()).getLvl() >= unlock_lvl && event.getMaterial() == Material.FEATHER) {
+        if (RampageCore.selectables.isSelectedClass(p, "archer") && JsonUtils.getPlayerInfoName(p.getName()).getLvl() >= unlock_lvl && event.getMaterial() == Material.FEATHER) {
             if (!this.cooldownAscent.containsKey(id)) {
                 this.cooldownAscent.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
             }
@@ -165,7 +163,7 @@ public class Archer
             Player p = (Player) event.getEntity();
             UUID id = p.getUniqueId();
             int unlock_lvl = 50;
-            if (PEX.inGroup(p, "archer") && JsonUtils.getPlayerInfoName(p.getName()).getLvl() >= unlock_lvl && this.damageAscent.containsKey(id) && event.getCause() == EntityDamageEvent.DamageCause.FALL) {
+            if (RampageCore.selectables.isSelectedClass(p, "archer") && JsonUtils.getPlayerInfoName(p.getName()).getLvl() >= unlock_lvl && this.damageAscent.containsKey(id) && event.getCause() == EntityDamageEvent.DamageCause.FALL) {
                 this.damageAscent.remove(id);
                 event.setCancelled(true);
             }

@@ -6,7 +6,6 @@ import dev.rampage.rampagecore.json.JsonUtils;
 import dev.rampage.rampagecore.json.PlayerInfo;
 import dev.rampage.rampagecore.api.utils.ActionBar;
 import dev.rampage.rampagecore.api.utils.Cooldown;
-import dev.rampage.rampagecore.api.utils.PEX;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -46,7 +45,7 @@ public class Warrior
         UUID id = player.getUniqueId();
         PlayerInfo playerInfo = JsonUtils.getPlayerInfoName(player.getName());
         int lvl = playerInfo.getLvl();
-        if (PEX.inGroup(player, "warrior") && player.getGameMode() == GameMode.SURVIVAL && lvl >= unlock_lvl) {
+        if (RampageCore.selectables.isSelectedClass(player, "warrior") && player.getGameMode() == GameMode.SURVIVAL && lvl >= unlock_lvl) {
             if (!this.cooldownDash.containsKey(id)) {
                 this.cooldownDash.put(id, System.currentTimeMillis() - (long) this.cooldownTimeDash * 1000L);
             }
@@ -60,7 +59,6 @@ public class Warrior
                 player.setHealth(Math.min(player.getHealthScale(), player.getHealth() + 2.0));
 
                 new BukkitRunnable() {
-
                     public void run() {
                         ActionBar.send(player, ChatColor.GREEN + "Рывок перезарядился!");
                         player.setAllowFlight(true);
@@ -84,7 +82,7 @@ public class Warrior
             UUID id = damager.getUniqueId();
             PlayerInfo playerInfo = JsonUtils.getPlayerInfoName(damager.getName());
             int lvl = playerInfo.getLvl();
-            if (PEX.inGroup(damager, "warrior") && lvl >= unlock_lvl) {
+            if (RampageCore.selectables.isSelectedClass(damager, "warrior") && lvl >= unlock_lvl) {
                 if (!this.cooldownShieldBreak.containsKey(id)) {
                     this.cooldownShieldBreak.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
                 }
@@ -121,7 +119,7 @@ public class Warrior
         UUID id = p.getUniqueId();
         PlayerInfo playerInfo = JsonUtils.getPlayerInfoName(p.getName());
         int lvl = playerInfo.getLvl();
-        if (PEX.inGroup(p, "warrior") && lvl >= unlock_lvl) {
+        if (RampageCore.selectables.isSelectedClass(p, "warrior") && lvl >= unlock_lvl) {
             ItemStack item = p.getInventory().getItemInMainHand();
             ArrayList<Material> swords = new ArrayList<>(Arrays.asList(Material.WOODEN_SWORD, Material.STONE_SWORD, Material.IRON_SWORD, Material.GOLDEN_SWORD, Material.DIAMOND_SWORD, Material.NETHERITE_SWORD));
             if (swords.contains(item.getType()) && event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
@@ -153,7 +151,7 @@ public class Warrior
         UUID id = p.getUniqueId();
         PlayerInfo playerInfo = JsonUtils.getPlayerInfoName(p.getName());
         int lvl = playerInfo.getLvl();
-        if (PEX.inGroup(p, "warrior") && lvl >= unlock_lvl && event.getMaterial() == Material.GLOWSTONE_DUST) {
+        if (RampageCore.selectables.isSelectedClass(p, "warrior") && lvl >= unlock_lvl && event.getMaterial() == Material.GLOWSTONE_DUST) {
             if (!this.cooldownImmunity.containsKey(id)) {
                 this.cooldownImmunity.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
             }
@@ -192,7 +190,7 @@ public class Warrior
             UUID id = p.getUniqueId();
             PlayerInfo playerInfo = JsonUtils.getPlayerInfoName(p.getName());
             int lvl = playerInfo.getLvl();
-            if (PEX.inGroup(p, "warrior") && lvl >= unlock_lvl && (afterHP = p.getHealth() - event.getFinalDamage()) <= p.getHealthScale() * 0.3 && afterHP > 0.0) {
+            if (RampageCore.selectables.isSelectedClass(p, "warrior") && lvl >= unlock_lvl && (afterHP = p.getHealth() - event.getFinalDamage()) <= p.getHealthScale() * 0.3 && afterHP > 0.0) {
                 if (!this.cooldownBerserkMode.containsKey(id)) {
                     this.cooldownBerserkMode.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
                 }
