@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+@Selectable.Manifest(name = "assassin")
 public class Assassin
         extends Selectable {
 

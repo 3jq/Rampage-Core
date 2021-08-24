@@ -38,9 +38,9 @@ public class ExpGainingListener
                 exp -= newLvlExp;
                 newLvlExp = ExpGainingListener.calcNewLvl(++lvl);
                 killer.sendMessage(ChatColor.YELLOW + "Вы повысили свой уровень до " + lvl + '!');
-                if (selectedClass.equals("archer") && lvl >= 30) {
+                if (selectedClass.equalsIgnoreCase("archer") && lvl >= 30) {
                     killer.addPotionEffect(PotionEffectType.SPEED.createEffect(6000000, 0));
-                } else if (selectedClass.equals("assassin") && lvl >= 30) {
+                } else if (selectedClass.equalsIgnoreCase("assassin") && lvl >= 30) {
                     killer.addPotionEffect(PotionEffectType.NIGHT_VISION.createEffect(6000000, 0));
                 }
 
@@ -50,7 +50,7 @@ public class ExpGainingListener
                     continue;
                 }
 
-                if (!selectedClass.equals("tank") || lvl % 10 != 0) continue;
+                if (!selectedClass.equalsIgnoreCase("tank") || lvl % 10 != 0) continue;
                 killer.setHealthScale(killer.getHealthScale() + 2.0);
                 killer.sendMessage(ChatColor.YELLOW + "Ваше здоровье возросло до " + killer.getHealthScale() + '.');
             }

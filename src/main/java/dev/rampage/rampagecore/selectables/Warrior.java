@@ -25,6 +25,7 @@ import org.bukkit.util.Vector;
 
 import java.util.*;
 
+@Selectable.Manifest(name = "warrior")
 public class Warrior
         extends Selectable {
 
