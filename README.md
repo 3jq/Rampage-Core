@@ -12,5 +12,5 @@
 При больших изменениях, следующим коммитом обязательно сделать оптимизацию и очищение костылей и плохого кода.
 
 # TODO:
-- Implement OOP;
-- Geomant Class.
+- Geomant Class;
+- Optimization of code in existing classes;
