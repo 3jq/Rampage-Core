@@ -34,7 +34,7 @@ public final class RampageCore
         Objects.requireNonNull(this.getCommand("c")).setTabCompleter(new CTabCompleter());
         PlayerJumpEvent.register(this);
         logger.info("Rampage Core successfully initialized!");
-        logger.info("ChatColor.YELLOW" + "Authors: Ergo, Aviatickets");
+        logger.info(ChatColor.YELLOW + "Authors: Ergo, Aviatickets");
     }
 
     public void onDisable() {

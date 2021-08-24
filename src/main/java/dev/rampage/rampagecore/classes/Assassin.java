@@ -47,7 +47,6 @@ public class Assassin
     public void loner(EntityDamageByEntityEvent event) {
         if (event.getDamager().getType() == EntityType.PLAYER && event.getEntity().getType() == EntityType.PLAYER) {
             Player p = (Player) event.getDamager();
-            UUID id = p.getUniqueId();
             double r = 16.0;
             int unlock_lvl = 10;
             if (PEX.inGroup(p, "assassin") && JsonUtils.getPlayerInfoName(p.getName()).getLvl() >= unlock_lvl) {
@@ -88,9 +87,11 @@ public class Assassin
             if (!this.cooldownBurrow.containsKey(id)) {
                 this.cooldownBurrow.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
             }
+
             if (!this.antiDoubleInteract.containsKey(id)) {
                 this.antiDoubleInteract.put(id, System.currentTimeMillis() - 100L);
             }
+
             int secondsLeft = (int) (this.cooldownBurrow.get(id) / 1000L + (long) cooldownTime - System.currentTimeMillis() / 1000L);
             int millsAfter = (int) (System.currentTimeMillis() - this.antiDoubleInteract.get(id));
             if (secondsLeft <= 0 && millsAfter >= 200) {
@@ -112,11 +113,11 @@ public class Assassin
                     new BukkitRunnable() {
 
                         public void run() {
-                            ActionBar.send(player, ChatColor.GREEN + "\u0417\u0430\u0441\u0430\u0434\u0430 \u043f\u0435\u0440\u0435\u0437\u0430\u0440\u044f\u0434\u0438\u043b\u0430\u0441\u044c!");
+                            ActionBar.send(player, ChatColor.GREEN + "Засада перезарядилась!");
                         }
                     }.runTaskLater(this.plugin, (long) cooldownTime * 20L);
                 } else {
-                    player.sendMessage(ChatColor.RED + "\u0418\u0441\u043f\u043e\u043b\u044c\u0437\u0443\u0439\u0442\u0435 \u044d\u0442\u043e \u0443\u043c\u0435\u043d\u0438\u0435 \u043d\u0430 \u0431\u043b\u043e\u043a \u043f\u043e\u0434 \u0441\u043e\u0431\u043e\u0439.");
+                    player.sendMessage(ChatColor.RED + "Используйте это умение на блок под собой.");
                     event.setCancelled(true);
                 }
                 this.antiDoubleInteract.put(id, System.currentTimeMillis());
@@ -146,22 +147,23 @@ public class Assassin
             UUID id = player.getUniqueId();
             ItemStack item = player.getInventory().getItemInMainHand();
             if (item.getType() == Material.TIPPED_ARROW && PEX.inGroup(player, "assassin") && JsonUtils.getPlayerInfoName(player.getName()).getLvl() >= unlock_lvl) {
-                int secondsLeft;
-                System.out.println(player.getDisplayName() + " is assassin");
+                RampageCore.logger.info(player.getDisplayName() + " is assassin.");
                 if (!this.cooldownBlindnessArrow.containsKey(id)) {
                     this.cooldownBlindnessArrow.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
                 }
-                if ((secondsLeft = (int) (this.cooldownBlindnessArrow.get(id) / 1000L + (long) cooldownTime - System.currentTimeMillis() / 1000L)) <= 0) {
+
+                if ((int) (this.cooldownBlindnessArrow.get(id) / 1000L + (long) cooldownTime - System.currentTimeMillis() / 1000L) <= 0) {
                     PotionMeta meta = (PotionMeta) item.getItemMeta();
                     if (meta.getBasePotionData().getType() == PotionType.WEAKNESS) {
                         Player victim = (Player) event.getEntity();
                         victim.addPotionEffect(PotionEffectType.BLINDNESS.createEffect(duration * 20, 1));
                     }
+
                     this.cooldownBlindnessArrow.put(id, System.currentTimeMillis());
                     new BukkitRunnable() {
 
                         public void run() {
-                            ActionBar.send(player, ChatColor.GREEN + "\u041e\u0441\u043b\u0435\u043f\u043b\u0435\u043d\u0438\u0435 \u043f\u0435\u0440\u0435\u0437\u0430\u0440\u044f\u0434\u0438\u043b\u0430\u0441\u044c!");
+                            ActionBar.send(player, ChatColor.GREEN + "Ослепление перезарядилось!");
                         }
                     }.runTaskLater(this.plugin, (long) cooldownTime * 20L);
                 }

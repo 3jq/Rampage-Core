@@ -58,11 +58,10 @@ public class Archer
         int cooldownTime = 7;
         int unlock_lvl = 10;
         if (PEX.inGroup(player, "archer") && player.getGameMode() == GameMode.SURVIVAL && JsonUtils.getPlayerInfoName(player.getName()).getLvl() >= unlock_lvl) {
-            int secondsLeft;
             if (!this.cooldownRebound.containsKey(id)) {
                 this.cooldownRebound.put(player.getUniqueId(), System.currentTimeMillis() - (long) cooldownTime * 1000L);
             }
-            if ((secondsLeft = (int) (this.cooldownRebound.get(id) / 1000L + (long) cooldownTime - System.currentTimeMillis() / 1000L)) <= 0) {
+            if ((int) (this.cooldownRebound.get(id) / 1000L + (long) cooldownTime - System.currentTimeMillis() / 1000L) <= 0) {
                 this.cooldownRebound.put(player.getUniqueId(), System.currentTimeMillis());
                 Location loc = player.getLocation().clone();
                 Vector jump = loc.getDirection();
@@ -72,7 +71,7 @@ public class Archer
                 new BukkitRunnable() {
 
                     public void run() {
-                        ActionBar.send(player, ChatColor.GREEN + "\u041e\u0442\u0441\u043a\u043e\u043a \u043f\u0435\u0440\u0435\u0437\u0430\u0440\u044f\u0434\u0438\u043b\u0441\u044f!");
+                        ActionBar.send(player, ChatColor.GREEN + "Отскок перезарядился!");
                         player.setAllowFlight(true);
                     }
                 }.runTaskLater(this.plugin, (long) cooldownTime * 20L);
@@ -104,17 +103,17 @@ public class Archer
         int duration = 7;
         int unlock_lvl = 20;
         if (event.getMaterial() == Material.RABBIT_FOOT && PEX.inGroup(player, "archer") && JsonUtils.getPlayerInfoName(player.getName()).getLvl() >= unlock_lvl) {
-            int secondsLeft;
             if (!this.cooldownRabbitJump.containsKey(id)) {
                 this.cooldownRabbitJump.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
             }
-            if ((secondsLeft = (int) (this.cooldownRabbitJump.get(id) / 1000L + (long) cooldownTime - System.currentTimeMillis() / 1000L)) <= 0) {
+
+            if ((int) (this.cooldownRabbitJump.get(id) / 1000L + (long) cooldownTime - System.currentTimeMillis() / 1000L) <= 0) {
                 player.addPotionEffect(PotionEffectType.JUMP.createEffect(duration * 20, 1));
                 this.cooldownRabbitJump.put(id, System.currentTimeMillis());
                 new BukkitRunnable() {
 
                     public void run() {
-                        ActionBar.send(player, ChatColor.GREEN + "\u041a\u0440\u043e\u043b\u0438\u0447\u0438\u0439 \u043f\u0440\u044b\u0436\u043e\u043a \u043f\u0435\u0440\u0435\u0437\u0430\u0440\u044f\u0434\u0438\u043b\u0441\u044f!");
+                        ActionBar.send(player, ChatColor.GREEN + "Кроличий прыжок перезарядился!");
                     }
                 }.runTaskLater(this.plugin, (long) cooldownTime * 20L);
             }
@@ -138,7 +137,7 @@ public class Archer
                 this.cooldownPoisonArrow.put(id, System.currentTimeMillis());
                 new BukkitRunnable() {
                     public void run() {
-                        ActionBar.send(player, ChatColor.GREEN + "\u0421\u0443\u043f\u0435\u0440-\u0441\u0442\u0440\u0435\u043b\u0430 \u043f\u0435\u0440\u0435\u0437\u0430\u0440\u044f\u0434\u0438\u043b\u0430\u0441\u044c!");
+                        ActionBar.send(player, ChatColor.GREEN + "Супер-стрела перезарядилась!");
                     }
                 }.runTaskLater(this.plugin, (long) cooldownTime * 20L);
             }
@@ -163,7 +162,7 @@ public class Archer
                 new BukkitRunnable() {
 
                     public void run() {
-                        ActionBar.send(p, ChatColor.GREEN + "\u0412\u0437\u043b\u0451\u0442 \u043f\u0435\u0440\u0435\u0437\u0430\u0440\u044f\u0434\u0438\u043b\u0441\u044f!");
+                        ActionBar.send(p, ChatColor.GREEN + "Взлёт перезарядился!");
                         Archer.this.damageAscent.remove(id);
                     }
                 }.runTaskLater(this.plugin, cooldownTime * 20);

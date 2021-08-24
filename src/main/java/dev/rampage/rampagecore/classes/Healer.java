@@ -67,23 +67,24 @@ public class Healer
                 int r = 10;
                 List list = player.getNearbyEntities(r, r, r);
                 if (lvl >= unlock_lvl) {
-                    int secondsLeft;
                     if (!this.cooldownMassiveHeal.containsKey(id)) {
                         this.cooldownMassiveHeal.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
                     }
-                    if ((secondsLeft = (int) (this.cooldownMassiveHeal.get(player.getUniqueId()) / 1000L + (long) cooldownTime - System.currentTimeMillis() / 1000L)) <= 0) {
+
+                    if ((int) (this.cooldownMassiveHeal.get(player.getUniqueId()) / 1000L + (long) cooldownTime - System.currentTimeMillis() / 1000L) <= 0) {
                         this.cooldownMassiveHeal.put(id, System.currentTimeMillis());
                         for (Entity entity : list) {
                             Player curPlayer;
                             if (entity.getType() != EntityType.PLAYER || !ClanUtils.sameClan(player, curPlayer = (Player) entity))
                                 continue;
                             curPlayer.setHealth(Math.min(curPlayer.getHealthScale(), curPlayer.getHealth() + 4.0));
-                            ActionBar.send(player, ChatColor.YELLOW + "\u0412\u044b \u0432\u043e\u0441\u0441\u0442\u0430\u043d\u043e\u0432\u0438\u043b\u0438 4 \u0437\u0434\u043e\u0440\u043e\u0432\u044c\u044f " + curPlayer.getName() + '.');
+                            ActionBar.send(player, ChatColor.YELLOW + "Вы восстановили 4 здоровья " + curPlayer.getName() + '.');
                         }
+
                         new BukkitRunnable() {
 
                             public void run() {
-                                ActionBar.send(player, ChatColor.GREEN + "\u041c\u0430\u0441\u0441\u043e\u0432\u043e\u0435 \u0432\u043e\u0441\u0441\u0442\u0430\u043d\u043e\u0432\u043b\u0435\u043d\u0438\u0435 \u043f\u0435\u0440\u0435\u0437\u0430\u0440\u044f\u0434\u0438\u043b\u043e\u0441\u044c!");
+                                ActionBar.send(player, ChatColor.GREEN + "Массовое восстановление перезарядилось!");
                             }
                         }.runTaskLater(this.plugin, cooldownTime * 20);
                     }
@@ -107,23 +108,24 @@ public class Healer
                 int r = 10;
                 List list = player.getNearbyEntities(r, r, r);
                 if (lvl >= unlock_lvl) {
-                    int secondsLeft;
                     if (!this.cooldownMassiveRegen.containsKey(id)) {
                         this.cooldownMassiveRegen.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
                     }
-                    if ((secondsLeft = (int) (this.cooldownMassiveRegen.get(player.getUniqueId()) / 1000L + (long) cooldownTime - System.currentTimeMillis() / 1000L)) <= 0) {
+
+                    if ((int) (this.cooldownMassiveRegen.get(player.getUniqueId()) / 1000L + (long) cooldownTime - System.currentTimeMillis() / 1000L) <= 0) {
                         this.cooldownMassiveRegen.put(id, System.currentTimeMillis());
                         for (Entity entity : list) {
                             Player curPlayer;
                             if (entity.getType() != EntityType.PLAYER || !ClanUtils.sameClan(player, curPlayer = (Player) entity))
                                 continue;
                             curPlayer.addPotionEffect(PotionEffectType.REGENERATION.createEffect(duration * 20, 0));
-                            ActionBar.send(player, ChatColor.YELLOW + "\u0412\u044b \u043d\u0430\u043b\u043e\u0436\u0438\u043b\u0438 \u044d\u0444\u0444\u0435\u043a\u0442 \u0440\u0435\u0433\u0435\u043d\u0435\u0440\u0430\u0446\u0438\u0438 \u043d\u0430 \u0438\u0433\u0440\u043e\u043a\u0430 " + curPlayer.getName() + '.');
+                            ActionBar.send(player, ChatColor.YELLOW + "Вы наложили эффект регенерации на игрока " + curPlayer.getName() + '.');
                         }
+
                         new BukkitRunnable() {
 
                             public void run() {
-                                ActionBar.send(player, ChatColor.GREEN + "\u041c\u0430\u0441\u0441\u043e\u0432\u0430\u044f \u0440\u0435\u0433\u0435\u043d\u0435\u0440\u0430\u0446\u0438\u044f \u043f\u0435\u0440\u0435\u0437\u0430\u0440\u044f\u0434\u0438\u043b\u0430\u0441\u044c!");
+                                ActionBar.send(player, ChatColor.GREEN + "Массовая регенерация перезарядилась!");
                             }
                         }.runTaskLater(this.plugin, cooldownTime * 20);
                     }
@@ -158,11 +160,11 @@ public class Healer
         PlayerInfo playerInfo = JsonUtils.getPlayerInfoName(p.getName());
         int lvl = playerInfo.getLvl();
         if (PEX.inGroup(p, "healer") && lvl >= unlock_lvl && event.getMaterial() == Material.SUGAR) {
-            int secondsLeft;
             if (!this.cooldownRejection.containsKey(id)) {
                 this.cooldownRejection.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
             }
-            if ((secondsLeft = Cooldown.SecLeft(this.cooldownRejection.get(id), cooldownTime)) <= 0) {
+
+            if (Cooldown.SecLeft(this.cooldownRejection.get(id), cooldownTime) <= 0) {
                 this.cooldownRejection.put(id, System.currentTimeMillis());
                 Location pLoc = p.getLocation();
                 Vector pVector = pLoc.toVector();
@@ -179,7 +181,7 @@ public class Healer
                 new BukkitRunnable() {
 
                     public void run() {
-                        ActionBar.send(p, ChatColor.GREEN + "\u041e\u0442\u0442\u0430\u043b\u043a\u0438\u0432\u0430\u043d\u0438\u0435 \u043f\u0435\u0440\u0435\u0437\u0430\u0440\u044f\u0434\u0438\u043b\u043e\u0441\u044c!");
+                        ActionBar.send(p, ChatColor.GREEN + "Отталкивание перезарядилось!");
                     }
                 }.runTaskLater(this.plugin, cooldownTime * 20);
             }
@@ -199,11 +201,11 @@ public class Healer
         if (PEX.inGroup(p, "healer") && lvl >= unlock_lvl) {
             ArrayList<Material> swords = new ArrayList<Material>(Arrays.asList(Material.WOODEN_SWORD, Material.STONE_SWORD, Material.IRON_SWORD, Material.GOLDEN_SWORD, Material.DIAMOND_SWORD));
             if (swords.contains(event.getMaterial())) {
-                int secondsLeft;
                 if (!this.cooldownBattleCry.containsKey(id)) {
                     this.cooldownBattleCry.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
                 }
-                if ((secondsLeft = Cooldown.SecLeft(this.cooldownBattleCry.get(id), cooldownTime)) <= 0) {
+
+                if (Cooldown.SecLeft(this.cooldownBattleCry.get(id), cooldownTime) <= 0) {
                     this.cooldownBattleCry.put(id, System.currentTimeMillis());
                     p.addPotionEffect(PotionEffectType.SPEED.createEffect(duration * 20, 0));
                     p.addPotionEffect(PotionEffectType.FIRE_RESISTANCE.createEffect(duration * 20, 0));
@@ -218,7 +220,7 @@ public class Healer
                     new BukkitRunnable() {
 
                         public void run() {
-                            ActionBar.send(p, ChatColor.GREEN + "\u0411\u043e\u0435\u0432\u043e\u0439 \u043a\u043b\u0438\u0447 \u043f\u0435\u0440\u0435\u0437\u0430\u0440\u044f\u0434\u0438\u043b\u0441\u044f!");
+                            ActionBar.send(p, ChatColor.GREEN + "Боевой клич перезарядился!");
                         }
                     }.runTaskLater(this.plugin, cooldownTime * 20);
                 }
@@ -232,25 +234,24 @@ public class Healer
         int unlock_lvl = 50;
         Entity entity = event.getEntity();
         if (event.getEntityType() == EntityType.PLAYER) {
-            double curHealth;
             final Player player = (Player) entity;
             UUID id = player.getUniqueId();
             PlayerInfo playerInfo = JsonUtils.getPlayerInfoName(player.getName());
             int lvl = playerInfo.getLvl();
             double damage = event.getFinalDamage();
-            if (damage >= (curHealth = player.getHealth()) && PEX.inGroup(player, "healer") && lvl >= unlock_lvl) {
-                int secondsLeft;
+            if (damage >= player.getHealth() && PEX.inGroup(player, "healer") && lvl >= unlock_lvl) {
                 if (!this.cooldownAlmostDead.containsKey(player.getUniqueId())) {
                     this.cooldownAlmostDead.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
                 }
-                if ((secondsLeft = (int) (this.cooldownAlmostDead.get(player.getUniqueId()) / 1000L + (long) cooldownTime - System.currentTimeMillis() / 1000L)) <= 0) {
+
+                if ((int) (this.cooldownAlmostDead.get(player.getUniqueId()) / 1000L + (long) cooldownTime - System.currentTimeMillis() / 1000L) <= 0) {
                     double maxHealth = player.getHealthScale();
                     player.setHealth(maxHealth / 2.0 + damage);
                     this.cooldownAlmostDead.put(player.getUniqueId(), System.currentTimeMillis());
                     new BukkitRunnable() {
 
                         public void run() {
-                            ActionBar.send(player, ChatColor.GREEN + "\u0412\u043e\u043b\u044f \u043a \u0436\u0438\u0437\u043d\u0438 \u043f\u0435\u0440\u0435\u0437\u0430\u0440\u044f\u0434\u0438\u043b\u0430\u0441\u044c!");
+                            ActionBar.send(player, ChatColor.GREEN + "Воля к жизни перезарядилась!");
                         }
                     }.runTaskLater(this.plugin, (long) cooldownTime * 20L);
                 }

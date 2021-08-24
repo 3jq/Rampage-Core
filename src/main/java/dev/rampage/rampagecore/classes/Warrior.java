@@ -65,7 +65,7 @@ public class Warrior
                 new BukkitRunnable() {
 
                     public void run() {
-                        ActionBar.send(player, ChatColor.GREEN + "\u0420\u044b\u0432\u043e\u043a \u043f\u0435\u0440\u0435\u0437\u0430\u0440\u044f\u0434\u0438\u043b\u0441\u044f!");
+                        ActionBar.send(player, ChatColor.GREEN + "Рывок перезарядился!");
                         player.setAllowFlight(true);
                     }
                 }.runTaskLater(this.plugin, (long) this.cooldownTimeDash * 20L);
@@ -106,7 +106,7 @@ public class Warrior
                         new BukkitRunnable() {
 
                             public void run() {
-                                ActionBar.send(damager, ChatColor.GREEN + "\u041f\u0440\u043e\u0431\u0438\u0442\u0438\u0435 \u043f\u0435\u0440\u0435\u0437\u0430\u0440\u044f\u0434\u0438\u043b\u043e\u0441\u044c!");
+                                ActionBar.send(damager, ChatColor.GREEN + "Пробитие перезарядилось!");
                             }
                         }.runTaskLater(this.plugin, (long) cooldownTime * 20L);
                     }
@@ -139,7 +139,7 @@ public class Warrior
                     new BukkitRunnable() {
 
                         public void run() {
-                            ActionBar.send(p, ChatColor.GREEN + "\u0423\u0441\u0438\u043b\u0435\u043d\u0438\u0435 \u043f\u0435\u0440\u0435\u0437\u0430\u0440\u044f\u0434\u0438\u043b\u043e\u0441\u044c!");
+                            ActionBar.send(p, ChatColor.GREEN + "Усиление перезарядилось!");
                         }
                     }.runTaskLater(this.plugin, (long) cooldownTime * 20L);
                 }
@@ -177,7 +177,7 @@ public class Warrior
                 new BukkitRunnable() {
 
                     public void run() {
-                        ActionBar.send(p, ChatColor.GREEN + "\u0418\u043c\u043c\u0443\u043d\u0438\u0442\u0435\u0442 \u043f\u0435\u0440\u0435\u0437\u0430\u0440\u044f\u0434\u0438\u043b\u0441\u044f!");
+                        ActionBar.send(p, ChatColor.GREEN + "Иммунитет перезарядился!");
                     }
                 }.runTaskLater(this.plugin, (cooldownTime + duration) * 20);
             }
@@ -208,7 +208,7 @@ public class Warrior
                     new BukkitRunnable() {
 
                         public void run() {
-                            ActionBar.send(p, ChatColor.GREEN + "\u0420\u0435\u0436\u0438\u043c \u0431\u0435\u0440\u0441\u0435\u0440\u043a\u0430 \u043f\u0435\u0440\u0435\u0437\u0430\u0440\u044f\u0434\u0438\u043b\u0441\u044f!");
+                            ActionBar.send(p, ChatColor.GREEN + "Режим берсерка перезарядился!");
                         }
                     }.runTaskLater(this.plugin, cooldownTime * 20);
                 }

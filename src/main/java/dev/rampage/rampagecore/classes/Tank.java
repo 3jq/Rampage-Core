@@ -68,7 +68,7 @@ public class Tank
                 new BukkitRunnable() {
 
                     public void run() {
-                        ActionBar.send(p, ChatColor.GREEN + "\u042f\u0434\u043e\u0432\u0438\u0442\u0430\u044f \u043a\u043e\u0436\u0430 \u043f\u0435\u0440\u0435\u0437\u0430\u0440\u044f\u0434\u0438\u043b\u0430\u0441\u044c!");
+                        ActionBar.send(p, ChatColor.GREEN + "Ядовитая кожа перезарядилась!");
                     }
                 }.runTaskLater(this.plugin, (duration + cooldownTime) * 20);
             }
@@ -120,7 +120,7 @@ public class Tank
                 new BukkitRunnable() {
 
                     public void run() {
-                        ActionBar.send(p, ChatColor.GREEN + "\u041f\u0440\u0438\u0442\u044f\u0436\u0435\u043d\u0438\u0435 \u043f\u0435\u0440\u0435\u0437\u0430\u0440\u044f\u0434\u0438\u043b\u043e\u0441\u044c!");
+                        ActionBar.send(p, ChatColor.GREEN + "Притяжение перезарядилось!");
                     }
                 }.runTaskLater(this.plugin, cooldownTime * 20);
             }
@@ -159,7 +159,7 @@ public class Tank
                 new BukkitRunnable() {
 
                     public void run() {
-                        ActionBar.send(p, ChatColor.GREEN + "\u041e\u0447\u0438\u0449\u0435\u043d\u0438\u0435 \u043f\u0435\u0440\u0435\u0437\u0430\u0440\u044f\u0434\u0438\u043b\u043e\u0441\u044c!");
+                        ActionBar.send(p, ChatColor.GREEN + "Очищение перезарядилось!");
                     }
                 }.runTaskLater(this.plugin, cooldownTime * 20);
             }
