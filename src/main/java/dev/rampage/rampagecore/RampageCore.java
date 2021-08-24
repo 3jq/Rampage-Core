@@ -3,11 +3,11 @@ package dev.rampage.rampagecore;
 import dev.rampage.rampagecore.api.listeners.ExpGainingListener;
 import dev.rampage.rampagecore.api.listeners.MouseClickListener;
 import dev.rampage.rampagecore.api.events.PlayerJumpEvent;
+import dev.rampage.rampagecore.api.listeners.PotionListener;
 import dev.rampage.rampagecore.api.patches.PhasePatch;
 import dev.rampage.rampagecore.api.selectable.Selectables;
 import dev.rampage.rampagecore.commands.C;
 import dev.rampage.rampagecore.commands.CTabCompleter;
-import dev.rampage.rampagecore.api.utils.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 import org.bukkit.ChatColor;
@@ -33,7 +33,7 @@ public final class RampageCore
 
         // Вот эти "new Shit(this)" я потом уберу, потому что они выглядят отвратительно.
         new MouseClickListener(this);
-        new RestorePotionEffects(this);
+        new PotionListener(this);
         new PhasePatch(this);
         new ExpGainingListener(this);
         this.getCommand("c").setExecutor(new C());

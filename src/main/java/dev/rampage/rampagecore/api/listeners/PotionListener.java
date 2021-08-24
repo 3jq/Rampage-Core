@@ -1,4 +1,4 @@
-package dev.rampage.rampagecore.api.utils;
+package dev.rampage.rampagecore.api.listeners;
 
 import dev.rampage.rampagecore.RampageCore;
 import dev.rampage.rampagecore.json.JsonUtils;
@@ -14,12 +14,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class Potion
+public class PotionListener
         implements Listener {
 
     final RampageCore plugin;
 
-    public Potion(RampageCore plugin) {
+    public PotionListener(RampageCore plugin) {
         this.plugin = plugin;
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
@@ -58,9 +58,9 @@ public class Potion
         final Player p = event.getPlayer();
         new BukkitRunnable() {
             public void run() {
-                Potion.calculateHP(p);
-                Potion.setSpeed(p);
-                Potion.setNightVision(p);
+                PotionListener.calculateHP(p);
+                PotionListener.setSpeed(p);
+                PotionListener.setNightVision(p);
             }
         }.runTaskLater(this.plugin, 5L);
     }
@@ -116,9 +116,9 @@ public class Potion
             RampageCore.logger.info("Created player " + nickname);
         }
 
-        Potion.calculateHP(p);
-        Potion.setSpeed(p);
-        Potion.setNightVision(p);
+        PotionListener.calculateHP(p);
+        PotionListener.setSpeed(p);
+        PotionListener.setNightVision(p);
     }
 }
 

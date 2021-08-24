@@ -44,7 +44,7 @@ public class Assassin
             double r = 16.0;
             int unlock_lvl = 10;
             if (RampageCore.selectables.isSelectedClass(p, "assassin") && JsonUtils.getPlayerInfoName(p.getName()).getLvl() >= unlock_lvl) {
-                List list = p.getNearbyEntities(r, r, r);
+                List<Entity> list = p.getNearbyEntities(r, r, r);
                 int count = 0;
 
                 for (Entity entity : list) {

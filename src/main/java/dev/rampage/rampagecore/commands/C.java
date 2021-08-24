@@ -4,7 +4,7 @@ import dev.rampage.rampagecore.json.JsonUtils;
 import dev.rampage.rampagecore.json.PlayerInfo;
 import dev.rampage.rampagecore.api.listeners.ExpGainingListener;
 import dev.rampage.rampagecore.api.utils.LuckPermsUtils;
-import dev.rampage.rampagecore.api.utils.RestorePotionEffects;
+import dev.rampage.rampagecore.api.listeners.PotionListener;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -716,7 +716,7 @@ public class C
                 if (playerInfo.getSelectedClass().equalsIgnoreCase("none")) {
                     Player player = ((Player) sender).getPlayer();
                     C.removeEffects(player);
-                    RestorePotionEffects.calculateHP(player);
+                    PotionListener.calculateHP(player);
                     switch (secondSelectedClass) {
                         case "healer":
                             LuckPermsUtils.addPermission(id, "essentials.kits.healer");
@@ -845,7 +845,7 @@ public class C
                     }
 
                     JsonUtils.createPlayerInfo(nickname, selectedClass, lvl, exp);
-                    RestorePotionEffects.calculateHP(player);
+                    PotionListener.calculateHP(player);
                     break;
                 }
 
@@ -876,7 +876,7 @@ public class C
                         player.sendMessage(ChatColor.YELLOW + sender.getName() + " понизил ваш уровень до " + amount + '!');
                     }
                     JsonUtils.createPlayerInfo(nickname, selectedClass, amount, 0);
-                    RestorePotionEffects.calculateHP(player);
+                    PotionListener.calculateHP(player);
                     break;
                 }
 

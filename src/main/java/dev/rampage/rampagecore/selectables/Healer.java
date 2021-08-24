@@ -10,6 +10,7 @@ import dev.rampage.rampagecore.api.utils.Cooldown;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -59,7 +60,7 @@ public class Healer
             int lvl = playerInfo.getLvl();
             if (potionMeta.getBasePotionData().getType().equals(PotionType.INSTANT_HEAL) && RampageCore.selectables.isSelectedClass(player, "healer")) {
                 int r = 10;
-                List list = player.getNearbyEntities(r, r, r);
+                List<Entity> list = player.getNearbyEntities(r, r, r);
                 if (lvl >= unlock_lvl) {
                     if (!this.cooldownMassiveHeal.containsKey(id)) {
                         this.cooldownMassiveHeal.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
@@ -99,7 +100,7 @@ public class Healer
             if (potionMeta.getBasePotionData().getType().equals(PotionType.REGEN) && RampageCore.selectables.isSelectedClass(player, "healer")) {
                 int lvl = playerInfo.getLvl();
                 int r = 10;
-                List list = player.getNearbyEntities(r, r, r);
+                List<Entity> list = player.getNearbyEntities(r, r, r);
                 if (lvl >= unlock_lvl) {
                     if (!this.cooldownMassiveRegen.containsKey(id)) {
                         this.cooldownMassiveRegen.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
@@ -159,7 +160,7 @@ public class Healer
                 this.cooldownRejection.put(id, System.currentTimeMillis());
                 Location pLoc = p.getLocation();
                 Vector pVector = pLoc.toVector();
-                List list = p.getNearbyEntities(r, r, r);
+                List<Entity> list = p.getNearbyEntities(r, r, r);
                 for (Entity e : list) {
                     if (e.getType() == EntityType.PLAYER && ClanUtils.sameClan((Player) e, p)) continue;
                     Location eLoc = e.getLocation();
@@ -189,7 +190,7 @@ public class Healer
         PlayerInfo playerInfo = JsonUtils.getPlayerInfoName(p.getName());
         int lvl = playerInfo.getLvl();
         if (RampageCore.selectables.isSelectedClass(p, "healer") && lvl >= unlock_lvl) {
-            ArrayList<Material> swords = new ArrayList<Material>(Arrays.asList(Material.WOODEN_SWORD, Material.STONE_SWORD, Material.IRON_SWORD, Material.GOLDEN_SWORD, Material.DIAMOND_SWORD));
+            ArrayList<Material> swords = new ArrayList<>(Arrays.asList(Material.WOODEN_SWORD, Material.STONE_SWORD, Material.IRON_SWORD, Material.GOLDEN_SWORD, Material.DIAMOND_SWORD));
             if (swords.contains(event.getMaterial())) {
                 if (!this.cooldownBattleCry.containsKey(id)) {
                     this.cooldownBattleCry.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
@@ -200,7 +201,7 @@ public class Healer
                     p.addPotionEffect(PotionEffectType.SPEED.createEffect(duration * 20, 0));
                     p.addPotionEffect(PotionEffectType.FIRE_RESISTANCE.createEffect(duration * 20, 0));
                     p.addPotionEffect(PotionEffectType.INCREASE_DAMAGE.createEffect(duration * 20, 0));
-                    List list = p.getNearbyEntities(r, r, r);
+                    List<Entity> list = p.getNearbyEntities(r, r, r);
                     for (Entity e : list) {
                         if (e.getType() != EntityType.PLAYER || !ClanUtils.sameClan((Player) e, p)) continue;
                         ((Player) e).addPotionEffect(PotionEffectType.SPEED.createEffect(duration * 20, 0));

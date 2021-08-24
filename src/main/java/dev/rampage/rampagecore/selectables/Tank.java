@@ -103,7 +103,7 @@ public class Tank
                 this.cooldownAttraction.put(id, System.currentTimeMillis());
                 Location pLoc = p.getLocation();
                 Vector pVector = pLoc.toVector();
-                List list = p.getNearbyEntities(r, r, r);
+                List<Entity> list = p.getNearbyEntities(r, r, r);
                 for (Entity e : list) {
                     if (e.getType() == EntityType.PLAYER && ClanUtils.sameClan((Player) e, p)) continue;
                     Location eLoc = e.getLocation();
