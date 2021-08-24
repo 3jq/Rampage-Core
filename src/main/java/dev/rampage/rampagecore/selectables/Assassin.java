@@ -15,7 +15,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -49,10 +48,12 @@ public class Assassin
             if (PEX.inGroup(p, "assassin") && JsonUtils.getPlayerInfoName(p.getName()).getLvl() >= unlock_lvl) {
                 List list = p.getNearbyEntities(r, r, r);
                 int count = 0;
+
                 for (Entity entity : list) {
                     if (entity.getType() != EntityType.PLAYER || ClanUtils.sameClan((Player) entity, p)) continue;
                     ++count;
                 }
+
                 if (count <= 1) {
                     event.setDamage(event.getDamage() * 1.3);
                 }
@@ -79,7 +80,7 @@ public class Assassin
         UUID id = player.getUniqueId();
         int cooldownTime = 7;
         int duration = 3600;
-        int unlock_lvl = 30;
+        int unlock_lvl = 20;
         if (PEX.inGroup(player, "assassin") && JsonUtils.getPlayerInfoName(player.getName()).getLvl() >= unlock_lvl && event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && player.getInventory().getItemInMainHand().getType() == Material.WOODEN_SHOVEL) {
             if (!this.cooldownBurrow.containsKey(id)) {
                 this.cooldownBurrow.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
