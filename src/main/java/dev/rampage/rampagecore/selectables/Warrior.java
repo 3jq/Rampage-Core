@@ -157,7 +157,6 @@ public class Warrior
                 p.addPotionEffect(PotionEffectType.GLOWING.createEffect(duration * 20, 0));
                 for (int time = 0; time < duration * 20; time += 5) {
                     new BukkitRunnable() {
-
                         public void run() {
                             for (PotionEffectType a : Warrior.this.debuffs) {
                                 p.removePotionEffect(a);
@@ -166,7 +165,6 @@ public class Warrior
                     }.runTaskLater(this.plugin, time);
                 }
                 new BukkitRunnable() {
-
                     public void run() {
                         ActionBar.send(p, ChatColor.GREEN + "Иммунитет перезарядился!");
                     }

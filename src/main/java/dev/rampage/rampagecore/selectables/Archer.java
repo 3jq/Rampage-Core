@@ -77,7 +77,8 @@ public class Archer
 
     @EventHandler public void rebound(PlayerJumpEvent event) {
         final Player player = event.getPlayer();
-        if ((RampageCore.selectables.isSelectedClass(player, "archer") || RampageCore.selectables.isSelectedClass(player, "warrior")) && player.getGameMode() == GameMode.SURVIVAL) {
+        int unlockLvl = 10;
+        if ((RampageCore.selectables.isSelectedClass(player, "archer") || RampageCore.selectables.isSelectedClass(player, "warrior")) && player.getGameMode() == GameMode.SURVIVAL && JsonUtils.getPlayerInfoName(player.getName()).getLvl() >= unlockLvl) {
             player.setAllowFlight(true);
             new BukkitRunnable() {
                 public void run() {
