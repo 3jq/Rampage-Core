@@ -170,8 +170,8 @@ public class Healer
                     vector.multiply(new Vector(2.0, 2.4, 2.0));
                     e.setVelocity(vector);
                 }
-                new BukkitRunnable() {
 
+                new BukkitRunnable() {
                     public void run() {
                         ActionBar.send(p, ChatColor.GREEN + "Отталкивание перезарядилось!");
                     }
@@ -237,7 +237,6 @@ public class Healer
                     player.setHealth(maxHealth / 2.0 + damage);
                     this.cooldownAlmostDead.put(player.getUniqueId(), System.currentTimeMillis());
                     new BukkitRunnable() {
-
                         public void run() {
                             ActionBar.send(player, ChatColor.GREEN + "Воля к жизни перезарядилась!");
                         }

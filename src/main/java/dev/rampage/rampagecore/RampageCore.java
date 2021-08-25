@@ -11,6 +11,8 @@ import dev.rampage.rampagecore.commands.CTabCompleter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 import org.bukkit.ChatColor;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
@@ -28,8 +30,6 @@ public final class RampageCore
     public void onEnable() {
         // Тут, короче, инициализируем все классы.
         selectables = new Selectables(this);
-
-        // А тут инициализируем остальное говнище.
 
         // Вот эти "new Shit(this)" я потом уберу, потому что они выглядят отвратительно.
         new MouseClickListener(this);

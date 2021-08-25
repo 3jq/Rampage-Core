@@ -864,8 +864,8 @@ public class C
                         sender.sendMessage(ChatColor.RED + "Игрок не найден.");
                         return true;
                     }
+
                     int amount = Integer.parseInt(args[2]);
-                    UUID id = player.getUniqueId();
                     PlayerInfo playerInfo = JsonUtils.getPlayerInfoName(player.getName());
                     String nickname = player.getName();
                     String selectedClass = playerInfo.getSelectedClass();

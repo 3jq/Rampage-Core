@@ -92,13 +92,11 @@ public class Warrior
                         this.cooldownShieldBreak.put(id, System.currentTimeMillis());
                         victim.getInventory().setItemInOffHand(null);
                         new BukkitRunnable() {
-
                             public void run() {
                                 victim.getInventory().setItemInOffHand(item);
                             }
                         }.runTaskLater(this.plugin, 30L);
                         new BukkitRunnable() {
-
                             public void run() {
                                 ActionBar.send(damager, ChatColor.GREEN + "Пробитие перезарядилось!");
                             }
@@ -125,12 +123,11 @@ public class Warrior
                     this.cooldownGetPower.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
                 }
 
-                if ((int) (this.cooldownGetPower.get(id) / 1000L + (long) cooldownTime - System.currentTimeMillis() / 1000L) <= 0) {
+                if ((int) (this.cooldownGetPower.get(id) / 1000L + (long) cooldownTime - System.currentTimeMillis() / 1000L) <= 0 && !(p.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE) || p.hasPotionEffect(PotionEffectType.REGENERATION))) {
                     p.addPotionEffect(PotionEffectType.INCREASE_DAMAGE.createEffect(duration * 20, 0));
                     p.addPotionEffect(PotionEffectType.REGENERATION.createEffect(duration * 20, 0));
                     this.cooldownGetPower.put(id, System.currentTimeMillis());
                     new BukkitRunnable() {
-
                         public void run() {
                             ActionBar.send(p, ChatColor.GREEN + "Усиление перезарядилось!");
                         }
