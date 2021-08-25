@@ -41,8 +41,6 @@ public final class RampageCore
         PlayerJumpEvent.register(this);
         logger.info("Rampage Core successfully initialized!");
         logger.info(ChatColor.YELLOW + "Authors: Ergo, Aviatickets");
-
-        //checking git
     }
 
     public void onDisable() { logger.info("RampageCore was disabled."); }
