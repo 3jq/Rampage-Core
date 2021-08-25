@@ -891,7 +891,7 @@ public class C
                     return true;
                 }
                 double amount = Double.parseDouble(args[1]);
-                amount = Math.max(amount, 500.0);
+                amount = Math.min(amount, 500.0);
                 ExpGainingListener.globalBuster = amount /= 100.0;
                 Bukkit.broadcastMessage(ChatColor.YELLOW + "Установленное значение получаемого опыта - " + ChatColor.GREEN + amount * 100.0 + "%");
                 break;

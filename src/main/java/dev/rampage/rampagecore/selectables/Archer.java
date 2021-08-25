@@ -139,6 +139,8 @@ public class Archer
         final UUID id = p.getUniqueId();
         int cooldownTime = 30;
         int unlockLvl = 50;
+        int duration = 6;
+
         if (RampageCore.selectables.isSelectedClass(p, "archer") && JsonUtils.getPlayerInfoName(p.getName()).getLvl() >= unlockLvl && event.getMaterial() == Material.FEATHER) {
             if (!this.cooldownAscent.containsKey(id)) {
                 this.cooldownAscent.put(id, System.currentTimeMillis() - (long) (cooldownTime * 1000));
@@ -147,6 +149,7 @@ public class Archer
             if ((int) (this.cooldownAscent.get(id) / 1000L + (long) cooldownTime - System.currentTimeMillis() / 1000L) <= 0) {
                 Vector jump = new Vector(0, 3, 0);
                 p.setVelocity(jump);
+                p.addPotionEffect(PotionEffectType.SLOW_FALLING.createEffect(duration*20, 0));
                 this.cooldownAscent.put(id, System.currentTimeMillis());
                 this.damageAscent.put(id, System.currentTimeMillis());
                 new BukkitRunnable() {
@@ -159,16 +162,5 @@ public class Archer
         }
     }
 
-    @EventHandler public void fallDamage(EntityDamageEvent event) {
-        if (event.getEntityType().equals(EntityType.PLAYER)) {
-            Player p = (Player) event.getEntity();
-            UUID id = p.getUniqueId();
-            int unlockLvl = 50;
-            if (RampageCore.selectables.isSelectedClass(p, "archer") && JsonUtils.getPlayerInfoName(p.getName()).getLvl() >= unlockLvl && this.damageAscent.containsKey(id) && event.getCause() == EntityDamageEvent.DamageCause.FALL) {
-                this.damageAscent.remove(id);
-                event.setCancelled(true);
-            }
-        }
-    }
 }
 
