@@ -31,7 +31,7 @@ public final class RampageCore
         // Тут, короче, инициализируем все классы.
         selectables = new Selectables(this);
 
-        // Вот эти "new Shit(this)" я потом уберу, потому что они выглядят отвратительно.
+        // Вот эти "new Shit(this)" я потом уберу, потому что они выглядят отвратительно
         new MouseClickListener(this);
         new PotionListener(this);
         new PhasePatch(this);
