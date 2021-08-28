@@ -1,16 +1,3 @@
-﻿# Rampage-Core
-Основной используемый плагин на Rampage CWC.
+# Rampage-Core
 
-При коммитах, в начале обязательно указывать тип коммита:
-- Feature;
-- Fix;
-- Refactor;
-- Other.
-
-Все основные названия коммитов должны писаться на русском и излагать основную суть коммита.
-
-При больших изменениях, следующим коммитом обязательно сделать оптимизацию и очищение костылей и плохого кода.
-
-# TODO:
-- Geomant Class;
-- Optimization of code in existing classes;
+![Screenshot from 2021-08-28 18-33-57](https://user-images.githubusercontent.com/43454376/131223428-d579c77f-a596-487a-bac3-b3630555402d.png)
